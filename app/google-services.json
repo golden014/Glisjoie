@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "780489310102",
+    "project_id": "glisjoie",
+    "storage_bucket": "glisjoie.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780489310102:android:1eb13be4aee0bbb74d67b7",
+        "android_client_info": {
+          "package_name": "com.bluecactus.glisjoie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780489310102-oqo7ghvsmu6bol07u2qdqmocji8699sj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkX19VFEUXys-NVg7SZOJbm_B9ADmRZsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780489310102-oqo7ghvsmu6bol07u2qdqmocji8699sj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
