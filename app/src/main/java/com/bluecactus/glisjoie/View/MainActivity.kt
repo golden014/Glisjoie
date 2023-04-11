@@ -1,8 +1,9 @@
-package com.bluecactus.glisjoie
+package com.bluecactus.glisjoie.View
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.bluecactus.glisjoie.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
