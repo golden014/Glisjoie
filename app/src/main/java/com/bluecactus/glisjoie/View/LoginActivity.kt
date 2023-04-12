@@ -40,21 +40,19 @@ class LoginActivity : AppCompatActivity() {
                 val email_text= findViewById<EditText>(R.id.textEmail).text.toString()
                 val password_text = findViewById<EditText>(R.id.passwordField).text.toString()
 
-
-
                 loginViewModel.loginValidation(this, email_text, password_text) { result ->
                     if (result == "Success") {
-                        Log.e("loginValidation", "auth success")
+//                        Log.e("loginValidation", "auth success")
                         val currUser = loginViewModel.bindUserInfo(email_text) {result ->
                             userViewModel.updateCurrUser(result)
 
                             userViewModel.currUser.observe(this, { user ->
-                                Log.e("document dsfdsf", user?.userDocumentID?: "asdasdasd")
+//                                Log.e("document dsfdsf", user?.userDocumentID?: "asdasdasd")
                                 error_text.setText(user?.userDocumentID ?: "No user")
                             })
                         }
 
-                        userViewModel.currUser.value?.let { it1 -> Log.e("currUser", it1.userDocumentID) }
+//                        userViewModel.currUser.value?.let { it1 -> Log.e("currUser", it1.userDocumentID) }
 
 
                         error_text.text = userViewModel.currUser.value?.userDocumentID ?: "asdasdad"

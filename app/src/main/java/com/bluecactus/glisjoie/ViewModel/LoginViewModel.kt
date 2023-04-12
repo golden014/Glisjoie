@@ -58,9 +58,9 @@ class LoginViewModel: ViewModel() {
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
-                    Log.e("currUserViewModel", "docs exist with specified email")
+//                    Log.e("currUserViewModel", "docs exist with specified email")
                     val doc = querySnapshot.documents[0]
-                    Log.e("currUserViewModel", querySnapshot.documents[0].get("username") as String)
+//                    Log.e("currUserViewModel", querySnapshot.documents[0].get("username") as String)
 //                    currUser = doc.toObject<UserModel>()!!
 //                    currUser.userDocumentID = doc.id
                     currUser = UserModel(
@@ -72,9 +72,9 @@ class LoginViewModel: ViewModel() {
                         doc.get("profilePictureURL") as String
                     )
                     callback(currUser)
-                    Log.e("currUserViewModel", currUser.userDocumentID)
+//                    Log.e("currUserViewModel", currUser.userDocumentID)
                 } else {
-                    Log.e("bind user error", "error when binding user info using user's email")
+//                    Log.e("bind user error", "error when binding user info using user's email")
                     // No documents exist with the email field equal to "qwerty@email.com"
                 }
             }
