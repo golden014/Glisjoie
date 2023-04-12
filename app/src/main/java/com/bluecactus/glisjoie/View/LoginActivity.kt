@@ -28,8 +28,6 @@ class LoginActivity : AppCompatActivity() {
 //            error_text.setText("dsfsdfsdf")
 
 
-
-
             val loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
             val userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
