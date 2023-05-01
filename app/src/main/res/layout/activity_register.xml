@@ -5,26 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.RegisterActivity"
+    android:background="@drawable/auth_background"
     >
+
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
+        android:gravity="top"
         android:minWidth="150dp"
         android:padding="30dp"
+        android:layout_marginBottom="0dp"
         >
 
+        <TextView
+            android:id="@+id/logo_title"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="70dp"
+            android:fontFamily="@font/katibeh"
+            android:gravity="center"
+            android:text="Glisjoie"
+            android:textSize="40dp"
+            android:textColor="@color/logo_cyan"/>
         <TextView
             android:id="@+id/register_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register Page"
+            android:text="Register"
             android:layout_marginBottom="50dp"
             android:gravity="center"
             android:textSize="25dp"
+            android:fontFamily="@font/katibeh"
+            android:textColor="@color/logo_cyan"
             />
 
         <EditText
@@ -34,9 +50,9 @@
             android:ems="10"
             android:hint="Username"
             android:inputType="textPersonName"
-            android:textSize="13dp"
+            android:minHeight="48dp"
 
-            />
+            android:textSize="13dp" />
 
         <EditText
             android:id="@+id/register_email"
@@ -45,8 +61,8 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textPersonName"
-            android:textSize="13dp"
-            />
+            android:minHeight="48dp"
+            android:textSize="13dp" />
 
         <EditText
             android:id="@+id/register_password"
@@ -55,8 +71,8 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPersonName"
-            android:textSize="13dp"
-            />
+            android:minHeight="48dp"
+            android:textSize="13dp" />
 
         <EditText
             android:id="@+id/register_confirm_password"
@@ -65,15 +81,8 @@
             android:ems="10"
             android:hint="Confirm Password"
             android:inputType="textPersonName"
-            android:textSize="13dp"
-            />
-
-        <Button
-            android:id="@+id/register_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            />
+            android:minHeight="48dp"
+            android:textSize="13dp" />
 
         <TextView
             android:id="@+id/register_error_message"
@@ -81,7 +90,75 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textColor="#FF0000"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             />
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/curr_auth_page_button"
+            android:textColor="@color/black"
+            android:text="@string/create" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            >
+
+            <View
+                android:id="@+id/left_line_or"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:background="@drawable/straight_line"
+
+                />
+
+            <TextView
+                android:id="@+id/or_auth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/or_auth_page"
+                android:layout_toRightOf="@id/left_line_or"
+                android:paddingHorizontal="20dp"
+                android:textSize="15dp"
+                />
+
+            <View
+                android:id="@+id/right_line_or"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:background="@drawable/straight_line"
+                android:layout_toRightOf="@id/or_auth"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Already have an account ?"
+            android:paddingTop="5dp"
+            android:paddingBottom="20dp"
+            />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/other_auth_page_button"
+            android:minHeight="48dp"
+            android:text="@string/sign_in"
+            android:textColor="@color/black" />
+
+
+
+
+
 
     </LinearLayout>
 
