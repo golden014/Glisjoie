@@ -9,8 +9,4 @@ class UserModel(
     val profilePictureURL: String,
     ) {
 
-    fun createObject(){
-
-    }
-
 }
