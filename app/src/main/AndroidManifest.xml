@@ -18,6 +18,18 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity android:name=".View.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false">
+
+        </activity>
+
+        <activity android:name=".View.HomeActivity"
+            android:exported="false">
+
+        </activity>
+
         <activity
             android:name=".View.RegisterActivity"
             android:exported="true">

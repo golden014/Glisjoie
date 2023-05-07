@@ -28,11 +28,14 @@ class UserRepository {
 
     fun registerUserAuth(email: String, password: String, callback: (result: Int) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener() {
-                callback(200)
-            }
+//            .addOnCompleteListener() {
+//                callback(200)
+//            }
             .addOnFailureListener() {
                 callback(500)
+            }
+            .addOnSuccessListener(){
+                callback(200)
             }
     }
 
