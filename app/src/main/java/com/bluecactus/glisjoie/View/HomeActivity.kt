@@ -1,5 +1,6 @@
 package com.bluecactus.glisjoie.View
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,8 +10,11 @@ import android.widget.ListView
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bluecactus.glisjoie.Model.BookPreviewModel
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.ViewModel.BookPreviewAdapter
 import com.bluecactus.glisjoie.ViewModel.HomeViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 
@@ -19,25 +23,31 @@ class HomeActivity:AppCompatActivity() {
     lateinit var listView: ListView
     var names = arrayOf("josua", "jevon", "aaaa")
     lateinit var arrayAdapter:ArrayAdapter<String>
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: BookPreviewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        listView = findViewById(R.id.list_view)
+//        listView = findViewById(R.id.list_view)
         
         val books: Any = homeViewModel.getTopBooks { bookPreviewModels ->
-            if (bookPreviewModels.size > 0) {
+            if (bookPreviewModels.isNotEmpty()) {
                 Log.e("home activity", bookPreviewModels[0].title)
             } else {
                 Log.e("home activity", "size 0")
             }
 
 
-            arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, createBooksFromUnits(bookPreviewModels))
-            listView.setAdapter(arrayAdapter)
+            adapter = BookPreviewAdapter(this, R.layout.list_item_book_preview, bookPreviewModels.toList())
+            recyclerView.adapter = adapter
+//            arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, createBooksFromUnits(bookPreviewModels))
+//            listView.setAdapter(arrayAdapter)
         }
 
 
@@ -60,18 +70,23 @@ class HomeActivity:AppCompatActivity() {
 //                title = "Some Title",
 //                authorName = "Some Author"
 //            )
+                Log.e("homeActivity 63", "num of units")
                 if (unit is BookPreviewModel) {
                     val title = unit.title
                     val authorName = unit.authorName
+                    val cover = unit.cover
                     Log.e("debug", unit.title)
 
                     // Create BookPreviewModel object and add to list
-                    val book = BookPreviewModel(title = title, authorName = authorName)
-
+                    val book = BookPreviewModel(title = title, authorName = authorName, cover = cover)
+                    Log.e("homeActivity 70", title)
                     books.add(unit.title)
                 }
         }
 
+        }
+        for(i in books) {
+            Log.e("book", i)
         }
         return books
     }
@@ -79,6 +94,7 @@ class HomeActivity:AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         menuInflater.inflate(R.menu.menu, menu)
+
 
         val menuItem: MenuItem? = menu?.findItem(R.id.action_search)
         if (menuItem != null) {
@@ -89,6 +105,10 @@ class HomeActivity:AppCompatActivity() {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         // This method is called when the user submits the search query
                         // Handle the search query here
+
+                        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                        intent.putExtra("search_query", query)
+                        startActivity(intent)
                         return false
                     }
 
@@ -105,6 +125,7 @@ class HomeActivity:AppCompatActivity() {
             }
         }
         return true
+
 
 
         return super.onCreateOptionsMenu(menu)

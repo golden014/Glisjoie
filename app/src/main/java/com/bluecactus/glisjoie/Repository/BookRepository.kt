@@ -113,24 +113,40 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                             db.collection("users").document(userID).get()
                                 .addOnCompleteListener() { user ->
                                     Log.e("aaa1", userID)
-                                    Log.e("aaa2", user.toString())
-                    //                                user.getString("username")?.let {
-                    //                                    bookDoc.getString("bookTitle")?.let { it1 ->
-                    //                                        BookPreviewModel(
-                    //                                            it1,
-                    //                                            it
-                    //                                        )
-                    //                                    }
-                    //                                }?.let {
-                    //                                    books.add(
-                    //                                        it
-                    //                                    )
-                    //                                }
+                                    user.result.getString("username")?.let { Log.e("aaa2", it) }
+                                                    user.result.getString("username")?.let {
+                                                        bookDoc.getString("bookTitle")?.let { it1->
+                                                            bookDoc.getString("imageLink")?.let { it2 ->
+                                                                BookPreviewModel(
+                                                                    it1,
+                                                                    it,
+                                                                    it2
+                                                                )
+                                                            }
+
+                                                        }
+                                                    }?.let {
+                                                        Log.e("added",
+                                                            user.result.getString("username")!!
+                                                        )
+                                                        books.add(
+                                                            it
+                                                        )
+                                                    }
+
                                     if (user != null && user.result.exists()) {
                                         Log.e("zzz", "DocumentSnapshot data: ${user.result.data}")
                                     } else {
                                         Log.e("zzz", "No such document")
                                     }
+
+                                    if (books.size > 0) {
+                                        Log.e("book repo", books[0].title)
+
+                                    } else {
+                                        Log.e("book repo", "books 0")
+                                    }
+                                    callback(books.toTypedArray())
                                 }
 //                        }
 //                        Log.e("debug book repo", "authorID's:" + userID)
@@ -140,13 +156,7 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                     }
                 }
 
-                if (books.size > 0) {
-                    Log.e("book repo", books[0].title)
 
-                } else {
-                    Log.e("book repo", "books 0")
-                }
-                callback(books.toTypedArray())
 
             }
 
