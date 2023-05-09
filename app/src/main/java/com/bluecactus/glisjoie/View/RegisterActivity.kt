@@ -1,5 +1,6 @@
 package com.bluecactus.glisjoie.View
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,14 +39,30 @@ class RegisterActivity : AppCompatActivity() {
             regisViewModel.registerUser(email_text, username_text, "aaaaa", password_text, confirm_password_text) { result ->
                 Log.e("register", "done ?")
                 if (result == 200) {
-                    error_text.setText("Regis Success")
-                } else {
-                    error_text.setText("errorrr")
+                    error_text.setText(" ")
+                    startActivity(Intent(this, LoginActivity::class.java))
+                } else if (result == 500){
+                    error_text.setText("Something went wrong")
+                } else if (result == 410){
+                    error_text.setText("Please make sure all fields are filled in")
+                } else if (result == 420){
+                    error_text.setText("Username can't contain space or special characters")
+                } else if (result == 430){
+                    error_text.setText("Passwords do not match")
+                } else if (result == 440){
+                    error_text.setText("An account with this email address already exists")
                 }
             }
 
         }
 
+        val button = findViewById<Button>(R.id.login_button)
+        button.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+        }
 
     }
+
+
 }

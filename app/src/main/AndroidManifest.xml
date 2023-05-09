@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -16,13 +18,35 @@
         android:theme="@style/Theme.Glisjoie"
         tools:targetApi="31">
         <activity
-        android:name=".View.product.CreateProductActivity"
+            android:name=".SearchActivity"
+            android:exported="false"
+            android:label="@string/title_activity_search"
+            android:theme="@style/Theme.Glisjoie.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+  
+        <activity
             android:name=".View.SplashScreenActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+  
+        <activity
+            android:name=".View.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+         </activity>
+  
+        <activity
+            android:name=".View.HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light">
+        </activity>
+  
         <activity
             android:name=".View.RegisterActivity"
             android:exported="true">
