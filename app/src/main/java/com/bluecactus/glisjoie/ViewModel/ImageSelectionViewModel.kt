@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bluecactus.glisjoie.Model.ImageModel
 import com.bluecactus.glisjoie.R
-import com.bluecactus.glisjoie.View.product.CreateProductActivity
+import com.bluecactus.glisjoie.View.books.CreateBooksActivity
 
-class ImageSelectionViewModel(private val activity: CreateProductActivity) : ViewModel() {
+class ImageSelectionViewModel(private val activity: CreateBooksActivity) : ViewModel() {
 
 
     private val emptyImage = R.drawable.image
@@ -46,7 +46,7 @@ class ImageSelectionViewModel(private val activity: CreateProductActivity) : Vie
         }
     }
 
-    class Factory(private val activity: CreateProductActivity) : ViewModelProvider.Factory {
+    class Factory(private val activity: CreateBooksActivity) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ImageSelectionViewModel::class.java)) {
                 return ImageSelectionViewModel(activity) as T
