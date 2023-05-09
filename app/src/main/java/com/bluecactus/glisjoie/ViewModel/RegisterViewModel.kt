@@ -41,19 +41,23 @@ class RegisterViewModel: ViewModel() {
             if (!result) {
                 callback(440);
                 Log.e("registerViewModel", "email not unique")
+                return@emailIsUnique
+            } else {
+                userRepo.registerUser(newUser) { result ->
+                    if (result == 200) {
+                        userRepo.registerUserAuth(email, password) { result ->
+                            Log.e("registerUserAuth", result.toString())
+                            callback(result)
+                        }
+                    }
+//            callback(result)
+                };
             }
         }
 
-        Log.e("registerViewModel", email)
-        Log.e("registerViewModel", "validation passed")
-        userRepo.registerUser(newUser) { result ->
-            if (result == 200) {
-                 userRepo.registerUserAuth(email, password) { result ->
-                     callback(result)
-                 }
-            }
-            callback(result)
-        };
+//        Log.e("registerViewModel", email)
+//        Log.e("registerViewModel", "validation passed")
+
 
 
 
