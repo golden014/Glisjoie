@@ -1,24 +1,23 @@
 package com.bluecactus.glisjoie.ViewModel
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bluecactus.glisjoie.Model.BookPreviewModel
 import com.bluecactus.glisjoie.R
-import com.bumptech.glide.Glide
+import com.bluecactus.glisjoie.View.HomeActivity
+import com.bluecactus.glisjoie.View.SearchResultsFragment
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class BookPreviewAdapter(
-    private  val context: Context,
-    private  val resource: Int,
-    private  val objects: List<BookPreviewModel>) : RecyclerView.Adapter<BookPreviewAdapter.ViewHolder>() {
+    private val resource: Int,
+    private val objects: List<BookPreviewModel>) : RecyclerView.Adapter<BookPreviewAdapter.ViewHolder>() {
 
     public class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var textViewTitle: TextView? = itemView.findViewById(R.id.textViewTitle)

@@ -1,6 +1,5 @@
 package com.bluecactus.glisjoie.View
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,7 +15,6 @@ import com.bluecactus.glisjoie.Model.BookPreviewModel
 import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.ViewModel.BookPreviewAdapter
 import com.bluecactus.glisjoie.ViewModel.HomeViewModel
-import com.google.firebase.firestore.DocumentSnapshot
 
 class HomeActivity:AppCompatActivity() {
 
@@ -44,7 +42,7 @@ class HomeActivity:AppCompatActivity() {
             }
 
 
-            adapter = BookPreviewAdapter(this, R.layout.list_item_book_preview, bookPreviewModels.toList())
+            adapter = BookPreviewAdapter(R.layout.list_item_book_preview, bookPreviewModels.toList())
             recyclerView.adapter = adapter
 //            arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, createBooksFromUnits(bookPreviewModels))
 //            listView.setAdapter(arrayAdapter)
@@ -106,9 +104,16 @@ class HomeActivity:AppCompatActivity() {
                         // This method is called when the user submits the search query
                         // Handle the search query here
 
-                        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-                        intent.putExtra("search_query", query)
-                        startActivity(intent)
+//                        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+//                        intent.putExtra("search_query", query)
+//                        startActivity(intent)
+
+                        val searchResultsFragment = SearchResultsFragment.newInstance(query ?: "")
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, searchResultsFragment)
+                            .addToBackStack(null)
+                            .commit()
+
                         return false
                     }
 

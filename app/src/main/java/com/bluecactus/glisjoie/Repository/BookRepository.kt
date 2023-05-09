@@ -166,4 +166,12 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
 
     }
 
+    override fun performSearch(keyword: String, callback: (Array<BookPreviewModel>) -> Unit) {
+        val books = mutableListOf<BookPreviewModel>()
+
+        db.collection("books")
+            .whereEqualTo("bookTitile", keyword)
+
+    }
+
 }
