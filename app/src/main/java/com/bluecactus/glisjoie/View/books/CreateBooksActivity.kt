@@ -1,9 +1,7 @@
-package com.bluecactus.glisjoie.View.product
+package com.bluecactus.glisjoie.View.books
 
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,7 +11,7 @@ import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.ViewModel.BookViewModel
 import com.bluecactus.glisjoie.ViewModel.ImageSelectionViewModel
 
-class CreateProductActivity : AppCompatActivity() {
+class CreateBooksActivity : AppCompatActivity() {
 
     private lateinit var viewModel : ImageSelectionViewModel
     private lateinit var bookViewModel : BookViewModel
@@ -28,7 +26,7 @@ class CreateProductActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_product)
 
         //Membuat instance viewmodel
-        viewModel = ViewModelProvider(this, ImageSelectionViewModel.Factory(this as CreateProductActivity)).get(ImageSelectionViewModel::class.java)
+        viewModel = ViewModelProvider(this, ImageSelectionViewModel.Factory(this as CreateBooksActivity)).get(ImageSelectionViewModel::class.java)
         bookViewModel = ViewModelProvider(this).get(BookViewModel::class.java)
         //Ngambil component di xml
         imageView = findViewById<ImageView>(R.id.CoverImage)
