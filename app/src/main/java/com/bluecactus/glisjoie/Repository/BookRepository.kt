@@ -120,7 +120,8 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                                                                 BookPreviewModel(
                                                                     it1,
                                                                     it,
-                                                                    it2
+                                                                    it2,
+                                                                    bookDoc.id
                                                                 )
                                                             }
 
@@ -162,16 +163,62 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
 
     }
 
-    private fun <E> MutableList<E>.add(element: Unit) {
-
-    }
 
     override fun performSearch(keyword: String, callback: (Array<BookPreviewModel>) -> Unit) {
+        Log.e("searchdebug", "performsearch start, keyword: $keyword")
         val books = mutableListOf<BookPreviewModel>()
 
+
         db.collection("books")
-            .whereEqualTo("bookTitile", keyword)
+            .whereGreaterThanOrEqualTo("bookTitle", keyword)
+            .whereLessThan("bookTitle", keyword + "z")
+            .get()
+            .addOnSuccessListener { documents ->
+                Log.e("searchdebug", "success")
+                for (document in documents.documents) {
+                    val title = document.getString("bookTitle")
+                    Log.e("searchdebug title::", title.toString())
+                    val bookID = document.id
+                    val cover = document.getString("imageLink")
+                    var authorName = ""
+
+                    Log.e("searchdebug", title.toString())
+                    document.getString("userID")?.let {
+                        db.collection("users").document(it)
+                            .get()
+                            .addOnSuccessListener { userDoc ->
+                                authorName = userDoc.getString("username").toString()
+                                Log.e("searchdebug", userDoc.getString("username").toString())
+
+                                books.add(BookPreviewModel(title.toString(), authorName, cover.toString(), bookID))
+
+
+                                Log.e("searchdebug lol", books.toString())
+                                callback(books.toTypedArray())
+                            }
+                    }
+
+                    //masukin book baru ke array
+
+
+                }
+
+
+            }
+            .addOnFailureListener {
+                Log.e("searchdebug",  "fail")
+            }
+            .addOnCompleteListener {
+                Log.e("searchdebug", "complete start")
+            }
+            .addOnCanceledListener {
+                Log.e("searchdebug", "cancelled start")
+            }
+
+
 
     }
 
 }
+
+

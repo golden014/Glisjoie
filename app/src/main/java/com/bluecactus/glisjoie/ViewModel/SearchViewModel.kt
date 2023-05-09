@@ -8,6 +8,6 @@ class SearchViewModel: ViewModel() {
     val bookRepo = BookRepository()
 
     fun performSearch(query: String, callback: (Array<BookPreviewModel>) -> Unit) {
-
+        bookRepo.performSearch(query, callback)
     }
 }
