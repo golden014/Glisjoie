@@ -27,12 +27,12 @@ class CreateBooksActivity : AppCompatActivity() {
 
         //Membuat instance viewmodel
         viewModel = ViewModelProvider(this, ImageSelectionViewModel.Factory(this as CreateBooksActivity)).get(ImageSelectionViewModel::class.java)
-        bookViewModel = ViewModelProvider(this).get(BookViewModel::class.java)
+        bookViewModel = ViewModelProvider(this)[BookViewModel::class.java]
         //Ngambil component di xml
         imageView = findViewById<ImageView>(R.id.CoverImage)
 
         titleTF = findViewById<EditText>(R.id.BookTitleTF)
-        descriptionTF = findViewById<EditText>(R.id.BookTitleTF)
+        descriptionTF = findViewById<EditText>(R.id.DescriptionTF)
 
         addBookBtn = findViewById<Button>(R.id.AddBookBtn)
         selectImageBtn = findViewById<Button>(R.id.selectImageBtn)

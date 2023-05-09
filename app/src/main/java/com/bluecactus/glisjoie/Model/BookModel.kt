@@ -11,18 +11,18 @@ import java.io.ByteArrayOutputStream
 import java.util.*
 
 class BookModel(
-    private var message: String?,
-    private var bookTitle: String,
-    private var bookID: String?,
-    private var userID: String?,
-    private var description: String,
-    private var imageLink: String?,
+    var message: String?,
+    var bookTitle: String,
+    var bookID: String?,
+    var userID: String?,
+    var description: String,
+    var imageLink: String?,
     private var db: FirebaseFirestore?,
     var imageURI: Uri?,
     val date: Date?,
-    val rating: Float?
+    var rating: Float?,
+    var author: String?
 ) {
-
     private fun uploadImage(callback: (String?) -> Unit) {
         val storageRef = FirebaseStorage.getInstance().reference
         val filename = UUID.randomUUID().toString() + ".jpg"
@@ -34,7 +34,8 @@ class BookModel(
                     val downloadUrl = uri.toString()
 
                     // Store the download URL in Firestore
-                    val imageDocRef = FirebaseFirestore.getInstance().collection("images").document()
+                    val imageDocRef =
+                        FirebaseFirestore.getInstance().collection("images").document()
                     val image = hashMapOf(
                         "url" to downloadUrl
                     )
@@ -47,43 +48,42 @@ class BookModel(
                             FirebaseFirestore.getInstance().collection("images")
                                 .document(imageDocId).get()
                                 .addOnSuccessListener { documentSnapshot ->
-                                    val downloadUrlFromFirestore = documentSnapshot.get("url").toString()
+                                    val downloadUrlFromFirestore =
+                                        documentSnapshot.get("url").toString()
                                     callback(downloadUrlFromFirestore)
                                 }
                                 .addOnFailureListener { exception ->
                                     message = "No response code 56"
 
-                                    Log.wtf("BookModel",message)
+                                    Log.wtf("BookModel", message)
                                     callback(null)
                                 }
                         }
                         .addOnFailureListener { exception ->
                             message = "No response code 61"
 
-                            Log.wtf("BookModel",message)
+                            Log.wtf("BookModel", message)
                             callback(null)
                         }
                 }
                     ?.addOnFailureListener { exception ->
                         message = "No response code 62"
 
-                        Log.wtf("BookModel",message)
+                        Log.wtf("BookModel", message)
                         callback(null)
                     }
             }
             .addOnFailureListener { exception ->
                 message = "No response code 61"
 
-                Log.wtf("BookModel",message)
+                Log.wtf("BookModel", message)
                 callback(null)
             }
     }
 
 
-
-
-    fun createNewBook(newProduct : BookModel): String? {
-        if(newProduct.userID == null){
+    fun createNewBook(newProduct: BookModel): String? {
+        if (newProduct.userID == null) {
             newProduct.userID = "1"
         }
         this.bookID = newProduct.bookID
@@ -98,30 +98,33 @@ class BookModel(
                 // upload the book with the downloadUrl
                 imageLink = downloadUrl
                 Log.d("BookModel", "Success upload with link $downloadUrl")
-                uploadBook{ response ->
+                uploadBook { response ->
                     message = response
                 }
             } else {
                 message = "Fail to generate download URL"
-                Log.wtf("BookModel",message)
+                Log.wtf("BookModel", message)
             }
         }
 
-        //TODO: BUATIN HANDLE (DONE)
         return message
     }
 
 
     private fun uploadBook(callback: (String?) -> Unit) {
-        Log.wtf("BookModel","Sending upload request...")
+        Log.wtf("BookModel", "Sending upload request...")
         db?.collection("books")
             ?.add(this)
             ?.addOnSuccessListener { documentReference ->
                 Log.d("awikwok", "DocumentSnapshot added with ID: ${documentReference.id}")
                 message = "Successfully created new book"
-                Log.wtf("BookModel",message)
+                Log.wtf("BookModel", message)
             }?.addOnFailureListener {
                 message = "Failed to upload a new book, please try again"
             }
+
+
     }
+
 }
+

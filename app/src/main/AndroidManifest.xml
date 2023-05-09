@@ -21,15 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Glisjoie"
         tools:targetApi="31">
-        <activity
-            android:name=".SearchActivity"
-            android:exported="false"
-            android:label="@string/title_activity_search"
-            android:theme="@style/Theme.Glisjoie.NoActionBar">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
   
         <activity
             android:name=".View.SplashScreenActivity"
@@ -42,7 +34,7 @@
         <activity
             android:name=".View.LoginActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
          </activity>
   
         <activity
@@ -50,23 +42,24 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light">
         </activity>
-  
+
         <activity
-            android:name=".View.books.CreateBooksActivity"
-            android:exported="true">
+            android:name=".View.books.BookDetailActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
+
+
         <activity
-            android:name=".View.SplashScreenActivity"
-            android:exported="false">
+            android:name=".View.books.CreateBooksActivity"
+            android:exported="true">
+
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

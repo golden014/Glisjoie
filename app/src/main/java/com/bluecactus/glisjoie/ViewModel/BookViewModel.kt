@@ -2,16 +2,34 @@ package com.bluecactus.glisjoie.ViewModel
 
 import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bluecactus.glisjoie.Model.BookModel
+import com.bluecactus.glisjoie.Repository.BookRepository
+import com.squareup.picasso.Picasso
 import java.util.*
+import kotlin.math.log
 
 class BookViewModel : ViewModel() {
 
     lateinit var message: String
     private lateinit var book: BookModel
     var response: MutableLiveData<String> = MutableLiveData<String>("")
+    var bookData: MutableLiveData<BookModel> = MutableLiveData<BookModel>(null)
+    fun getBookByID(bookID: String?) {
+        val bookRepo = BookRepository()
+        return bookRepo.getBookByID(bookID) { bookModel ->
+            if (bookModel != null) {
+                bookData.value = bookModel
+                Log.d("HAPPY", bookData.value!!.bookTitle)
+            } else {
+                println("Error retrieving book details.")
+            }
+        }
+    }
 
     fun createBook(imageURI: Uri?, bookTitle: String, bookDescription: String) {
         //TODO: UPDATE THIS BookModel Constructor
@@ -28,6 +46,7 @@ class BookViewModel : ViewModel() {
             null,
             imageURI,
             Date(),
+            null,
             null
         )
         Log.wtf("BookModel", "This is running")
@@ -79,6 +98,22 @@ class BookViewModel : ViewModel() {
     fun uploadBookRequest(): String {
         book.createNewBook(book)
         return message
+    }
+
+    fun updateData(bookCover: ImageView, bookTitle: TextView, bookAuthor: TextView, bookRating: RatingBar, bookDescription: TextView) {
+        if(bookData.value != null){
+            val book = bookData.value ?: return
+            Picasso.get()
+                .load(book.imageLink)
+                .into(bookCover)
+
+            bookTitle.text = book.bookTitle
+            bookAuthor.text = book.author
+            bookRating.rating = book.rating?.toFloat()!!
+            bookDescription.text = book.description
+        }else{
+            Log.e("BookModelView", "bookData is null")
+        }
     }
 
 }
