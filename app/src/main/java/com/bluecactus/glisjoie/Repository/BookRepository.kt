@@ -174,34 +174,36 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
             .whereLessThan("bookTitle", keyword + "z")
             .get()
             .addOnSuccessListener { documents ->
-                Log.e("searchdebug", "success")
-                for (document in documents.documents) {
-                    val title = document.getString("bookTitle")
-                    Log.e("searchdebug title::", title.toString())
-                    val bookID = document.id
-                    val cover = document.getString("imageLink")
-                    var authorName = ""
+                if (documents.isEmpty) {
+                    Log.e("emptyDebug", "no doc found from given keyword")
+                    callback(emptyArray())
+                } else {
+                    Log.e("searchdebug", "success")
+                    for (document in documents.documents) {
+                        val title = document.getString("bookTitle")
+                        Log.e("searchdebug title::", title.toString())
+                        val bookID = document.id
+                        val cover = document.getString("imageLink")
+                        var authorName = ""
 
-                    Log.e("searchdebug", title.toString())
-                    document.getString("userID")?.let {
-                        db.collection("users").document(it)
-                            .get()
-                            .addOnSuccessListener { userDoc ->
-                                authorName = userDoc.getString("username").toString()
-                                Log.e("searchdebug", userDoc.getString("username").toString())
+                        Log.e("searchdebug", title.toString())
+                        document.getString("userID")?.let {
+                            db.collection("users").document(it)
+                                .get()
+                                .addOnSuccessListener { userDoc ->
+                                    authorName = userDoc.getString("username").toString()
+                                    Log.e("searchdebug", userDoc.getString("username").toString())
 
-                                books.add(BookPreviewModel(title.toString(), authorName, cover.toString(), bookID))
+                                    books.add(BookPreviewModel(title.toString(), authorName, cover.toString(), bookID))
 
 
-                                Log.e("searchdebug lol", books.toString())
-                                callback(books.toTypedArray())
-                            }
+                                    Log.e("searchdebug lol", books.toString())
+                                    callback(books.toTypedArray())
+                                }
+                        }
                     }
-
-                    //masukin book baru ke array
-
-
                 }
+
 
 
             }

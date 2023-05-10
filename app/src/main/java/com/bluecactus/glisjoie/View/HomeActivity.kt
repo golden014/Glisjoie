@@ -27,6 +27,7 @@ class HomeActivity:AppCompatActivity() {
     lateinit var adapter: BookPreviewAdapter
     lateinit var firstData: Array<BookPreviewModel>
     lateinit var message: TextView
+    var emptyData: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +43,7 @@ class HomeActivity:AppCompatActivity() {
 //        listView = findViewById(R.id.list_view)
         
         val books: Any = homeViewModel.getTopBooks { bookPreviewModels ->
-            if (bookPreviewModels.isNotEmpty()) {
-                Log.e("home activity", bookPreviewModels[0].title)
-            } else {
-                Log.e("home activity", "size 0")
-            }
-
+            emptyData = false
             firstData = bookPreviewModels
             adapter = BookPreviewAdapter(R.layout.list_item_book_preview, bookPreviewModels.toList())
             recyclerView.adapter = adapter
@@ -71,10 +67,6 @@ class HomeActivity:AppCompatActivity() {
 
         if (units is Array<*>) {
             units.forEach { unit ->
-//            val book = BookPreviewModel(
-//                title = "Some Title",
-//                authorName = "Some Author"
-//            )
                 Log.e("homeActivity 63", "num of units")
                 if (unit is BookPreviewModel) {
                     val title = unit.title
@@ -125,6 +117,7 @@ class HomeActivity:AppCompatActivity() {
                         recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity)
 
                         val isEmpty = searchViewModel.performSearch(query.toString()) { bookPreviewModels ->
+                            Log.e("isEmptyDebug", "bookPreviewModel start")
                             for (book in bookPreviewModels) {
                                 Log.e("performSearchDebug", book.title)
                             }
@@ -134,14 +127,18 @@ class HomeActivity:AppCompatActivity() {
 
                             Log.e("awikwok1", bookPreviewModels.size.toString())
                             if (bookPreviewModels.isEmpty()) {
+                                emptyData = true
                                 Log.e("awikwok1", "bookPreviewModels is empty")
+
                                 message.setText("No books found !")
                             }
                             adapter.updateData(bookPreviewModels.toList())
                         }
 
-                        if (isEmpty == null) {
-                            adapter.updateData(arrayOfNulls<BookPreviewModel>(1).toList() as List<BookPreviewModel>)
+                        if (emptyData) {
+//                            adapter.updateData(arrayOfNulls<BookPreviewModel>(1).toList() as List<BookPreviewModel>)
+                            adapter.clearData()
+                            message.setText("No books found !")
                         }
 
 
@@ -187,6 +184,7 @@ class HomeActivity:AppCompatActivity() {
                 }
 
                 override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
+                    emptyData = false
                     adapter.updateData(firstData.toList())
                     return true
                 }
