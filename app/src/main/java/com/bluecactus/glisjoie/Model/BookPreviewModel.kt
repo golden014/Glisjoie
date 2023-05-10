@@ -6,5 +6,6 @@ class BookPreviewModel(
     val title: String,
     val authorName: String,
     val cover: String,
-//    val bookId: String
+    val bookID: String,
+//    val cover: String,
 ) {}

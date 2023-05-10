@@ -40,7 +40,8 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                                                                 BookPreviewModel(
                                                                     it1,
                                                                     it,
-                                                                    it2
+                                                                    it2,
+                                                                    bookDoc.id
                                                                 )
                                                             }
                                                         }
@@ -63,20 +64,61 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
 
     }
 
-    private fun <E> MutableList<E>.add(element: Unit) {
-
-    }
 
     override fun performSearch(keyword: String, callback: (Array<BookPreviewModel>) -> Unit) {
+        Log.e("searchdebug", "performsearch start, keyword: $keyword")
         val books = mutableListOf<BookPreviewModel>()
 
-        db.collection("books")
-            .whereEqualTo("bookTitle", keyword)
 
+        db.collection("books").whereGreaterThanOrEqualTo("bookTitle", keyword)
+            .whereLessThan("bookTitle", keyword + "z")
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    Log.e("emptyDebug", "no doc found from given keyword")
+                    callback(emptyArray())
+                } else {
+                    Log.e("searchdebug", "success")
+                    for (document in documents.documents) {
+                        val title = document.getString("bookTitle")
+                        Log.e("searchdebug title::", title.toString())
+                        val bookID = document.id
+                        val cover = document.getString("imageLink")
+                        var authorName = ""
+
+                        Log.e("searchdebug", title.toString())
+                        document.getString("userID")?.let {
+                            db.collection("users").document(it)
+                                .get()
+                                .addOnSuccessListener { userDoc ->
+                                    authorName = userDoc.getString("username").toString()
+                                    Log.e("searchdebug", userDoc.getString("username").toString())
+
+                                    books.add(BookPreviewModel(title.toString(), authorName, cover.toString(), bookID))
+
+
+                                    Log.e("searchdebug lol", books.toString())
+                                    callback(books.toTypedArray())
+                                }
+                        }
+                    }
+                }
+
+
+
+            }
+            .addOnFailureListener {
+                Log.e("searchdebug",  "fail")
+            }
+            .addOnCompleteListener {
+                Log.e("searchdebug", "complete start")
+            }
+            .addOnCanceledListener {
+                Log.e("searchdebug", "cancelled start")
+            }
     }
 
     //Add book
-
     override fun getBookByID(bookID: String?, callback: (BookModel?) -> Unit) {
         if(bookID == null){
             Log.e("BookRepository", "getBookByID: bookID is null")

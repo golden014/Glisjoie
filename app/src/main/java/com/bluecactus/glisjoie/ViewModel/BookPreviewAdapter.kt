@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso
 
 class BookPreviewAdapter(
     private val resource: Int,
-    private val objects: List<BookPreviewModel>) : RecyclerView.Adapter<BookPreviewAdapter.ViewHolder>() {
+    private var objects: List<BookPreviewModel>) : RecyclerView.Adapter<BookPreviewAdapter.ViewHolder>() {
 
     public class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var textViewTitle: TextView? = itemView.findViewById(R.id.textViewTitle)
@@ -48,6 +48,15 @@ class BookPreviewAdapter(
 //
 //        return convertView!!
 //    }
+    fun updateData(newBookPreviewModels: List<BookPreviewModel>) {
+        this.objects = newBookPreviewModels
+        notifyDataSetChanged()
+    }
+
+    fun clearData() {
+        this.objects = emptyList()
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(resource, parent, false)

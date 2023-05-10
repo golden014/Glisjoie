@@ -20,6 +20,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <TextView
+        android:id="@+id/noBooksMessage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/katibeh"
+        android:textSize="25dp"
+        android:text=""
+        android:gravity="center"
+        android:textAlignment="center"
+
+    />
 <!--    <ListView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->

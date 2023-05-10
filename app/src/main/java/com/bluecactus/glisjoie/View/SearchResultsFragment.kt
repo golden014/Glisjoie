@@ -48,7 +48,7 @@ class SearchResultsFragment : Fragment() {
 
         // Perform the search using the searchQuery
         val searchResults = searchViewModel.performSearch(searchQuery) { bookPreviewModels ->
-            val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+            val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewSearch)
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = BookPreviewAdapter(R.layout.list_item_book_preview, bookPreviewModels.toList())
 
