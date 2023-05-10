@@ -1,6 +1,5 @@
 package com.bluecactus.glisjoie.ViewModel
 
-import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -19,55 +18,66 @@ class BookViewModel : ViewModel() {
 
         message = ""
 
-        book = BookModel(null, bookTitle, null, null, bookDescription, null, null, imageURI, Date(), null)
+        book = BookModel(
+            null,
+            bookTitle,
+            null,
+            null,
+            bookDescription,
+            null,
+            null,
+            imageURI,
+            Date(),
+            null
+        )
         Log.wtf("BookModel", "This is running")
         Log.wtf("BookModel", book.imageURI.toString())
         validateString(bookTitle)
         validateDescription(bookDescription)
         validateUri(imageURI)
 
-        if(message.isBlank()){
+        if (message.isBlank()) {
             message = uploadBookRequest()
-        }else{
+        } else {
             response.value = message
         }
 
         Log.wtf("BookModel", "BookViewModel: $message")
-        if(message.isNotBlank()){
+        if (message.isNotBlank()) {
             response.value = message
         }
     }
 
-    private fun validateDescription(bookDescription: String){
-        if(bookDescription.isBlank()){
+    private fun validateDescription(bookDescription: String) {
+        if (bookDescription.isBlank()) {
             message = "No description"
 
-            Log.wtf("BookModel",message)
-        }else if (bookDescription.length > 1500){
+            Log.wtf("BookModel", message)
+        } else if (bookDescription.length > 1500) {
             message = "Description to long (over 1500)"
 
-            Log.wtf("BookModel",message)
+            Log.wtf("BookModel", message)
         }
     }
 
     private fun validateString(bookTitle: String) {
-        if(bookTitle.isBlank()) {
+        if (bookTitle.isBlank()) {
             message = "No Title"
 
-            Log.wtf("BookModel",message)
+            Log.wtf("BookModel", message)
         }
     }
 
     private fun validateUri(imageURI: Uri?) {
-        if (imageURI == null){
+        if (imageURI == null) {
             message = "No Image Selected"
 
-            Log.wtf("BookModel",message)
+            Log.wtf("BookModel", message)
         }
     }
 
-    fun uploadBookRequest(): String{
-       book.createNewBook(book)
+    fun uploadBookRequest(): String {
+        book.createNewBook(book)
         return message
     }
 
