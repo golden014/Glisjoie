@@ -12,11 +12,4 @@ class HomeViewModel: ViewModel() {
         Log.e("home view model",  "hello")
        bookRepo.getTopBooks(callback)
     }
-
-//
-//    fun getTopBooks() {
-//        Log.e("home view model",  "hello2")
-//    }
-
-
 }

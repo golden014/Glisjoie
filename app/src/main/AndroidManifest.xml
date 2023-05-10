@@ -42,23 +42,24 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light">
         </activity>
-  
+
         <activity
-            android:name=".View.books.CreateBooksActivity"
-            android:exported="true">
+            android:name=".View.books.BookDetailActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
+
+
         <activity
-            android:name=".View.SplashScreenActivity"
-            android:exported="false">
+            android:name=".View.books.CreateBooksActivity"
+            android:exported="true">
+
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
