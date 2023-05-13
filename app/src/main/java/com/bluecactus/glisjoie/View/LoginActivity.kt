@@ -30,7 +30,8 @@ class LoginActivity : AppCompatActivity() {
 
 
             val loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-            val userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+            val userViewModel = ViewModelProvider((this)).get(UserViewModel::class.java)
+//            ViewModelProvider((this.applicationContext as YourApplicationClass)).get(UserViewModel::class.java)
 
 //            userViewModel.currUser.value?.let { Log.e("tes curr user", it.userDocumentID) }
 
@@ -45,10 +46,12 @@ class LoginActivity : AppCompatActivity() {
                         val currUser = loginViewModel.bindUserInfo(email_text) {result ->
                             userViewModel.updateCurrUser(result)
 
-                            userViewModel.currUser.observe(this, { user ->
+                            userViewModel.currUser.observe(this) { user ->
 //                                Log.e("document dsfdsf", user?.userDocumentID?: "asdasdasd")
                                 error_text.setText(user?.userDocumentID ?: "No user")
-                            })
+                                val intent = Intent(this, HomeActivity::class.java)
+                                startActivity(intent)
+                            }
                         }
 
 //                        userViewModel.currUser.value?.let { it1 -> Log.e("currUser", it1.userDocumentID) }

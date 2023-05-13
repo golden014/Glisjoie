@@ -6,6 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.HomeActivity">
 
+    <TextView
+        android:id="@+id/tes_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="asdasdasdasda"
+        />
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,10 @@ import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.ViewModel.BookPreviewAdapter
 import com.bluecactus.glisjoie.ViewModel.HomeViewModel
 import com.bluecactus.glisjoie.ViewModel.SearchViewModel
+import com.bluecactus.glisjoie.ViewModel.UserViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import org.w3c.dom.Text
 
 class HomeActivity:AppCompatActivity() {
 
@@ -28,6 +33,9 @@ class HomeActivity:AppCompatActivity() {
     lateinit var firstData: Array<BookPreviewModel>
     lateinit var message: TextView
     var emptyData: Boolean = false
+    lateinit var tes: TextView;
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +101,22 @@ class HomeActivity:AppCompatActivity() {
 
         menuInflater.inflate(R.menu.menu, menu)
 
+        val userViewModel = ViewModelProvider(this@HomeActivity).get(UserViewModel::class.java)
+
+        tes  = findViewById<TextView>(R.id.tes_name);
+
+//        userViewModel.currUser.observe(this) { user ->
+//            user?.let {
+//                tes.text = it.userDocumentID
+//            }
+//        }
+
+        val user = Firebase.auth.currentUser
+        if (user != null) {
+            tes.text = user.email
+        } else {
+            tes.text = "loading"
+        }
 
         val menuItem: MenuItem? = menu?.findItem(R.id.action_search)
         if (menuItem != null) {

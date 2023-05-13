@@ -46,8 +46,8 @@ class BookDetailActivity : AppCompatActivity() {
         bookDescription = findViewById(R.id.bookDescription)
         bookRating.setIsIndicator(true)
 
-        var bookId = ""
-        //TODO: IMPORTANT!! uncomment when receiving put extra
+        var bookId = intent.getStringExtra("bookID")
+//        TODO: IMPORTANT!! uncomment when receiving put extra
         //bookId = intent.getStringExtra("KEYNAME")
 
         bookViewModel.bookData.observe(this) {
@@ -55,7 +55,7 @@ class BookDetailActivity : AppCompatActivity() {
         }
 
         //TODO: IMPORTANT!! replace this with the bookId provided
-        bookViewModel.getBookByID("8jmeFAsRMDQsCDJ90gYu")
+        bookViewModel.getBookByID(bookId)
 
     }
 
