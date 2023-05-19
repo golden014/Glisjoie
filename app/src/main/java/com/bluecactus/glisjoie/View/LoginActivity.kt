@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
 
             login_button = findViewById<Button>(R.id.login_button)
             error_text = findViewById<TextView>(R.id.error_message)
-//            error_text.setText("dsfsdfsdf")
+            error_text.text = " "
 
 
             val loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
@@ -45,22 +45,16 @@ class LoginActivity : AppCompatActivity() {
 //                        Log.e("loginValidation", "auth success")
                         val currUser = loginViewModel.bindUserInfo(email_text) {result ->
                             userViewModel.updateCurrUser(result)
-
                             userViewModel.currUser.observe(this) { user ->
-//                                Log.e("document dsfdsf", user?.userDocumentID?: "asdasdasd")
-                                error_text.setText(user?.userDocumentID ?: "No user")
+                                error_text.text = user?.userDocumentID ?: "No user"
                                 val intent = Intent(this, HomeActivity::class.java)
                                 startActivity(intent)
                             }
                         }
-
-//                        userViewModel.currUser.value?.let { it1 -> Log.e("currUser", it1.userDocumentID) }
-
-
                         error_text.text = userViewModel.currUser.value?.userDocumentID ?: "asdasdad"
 
                     } else {
-                        error_text.setText(result)
+                        error_text.text = "Wrong credential"
                     }
 
                 }
