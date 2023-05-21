@@ -37,12 +37,16 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                                                     user.result.getString("username")?.let {
                                                         bookDoc.getString("bookTitle")?.let { it1->
                                                             bookDoc.getString("imageLink")?.let { it2 ->
-                                                                BookPreviewModel(
-                                                                    it1,
-                                                                    it,
-                                                                    it2,
-                                                                    bookDoc.id
-                                                                )
+                                                                bookDoc.get("rating")?.let { it3 ->
+                                                                    BookPreviewModel(
+                                                                        it1,
+                                                                        it,
+                                                                        it2,
+                                                                        bookDoc.id,
+                                                                        (it3 as Long).toInt()
+                                                                    )
+                                                                }
+
                                                             }
                                                         }
                                                     }?.let {
@@ -84,6 +88,7 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                         Log.e("searchdebug title::", title.toString())
                         val bookID = document.id
                         val cover = document.getString("imageLink")
+                        val rating = document.get("rating")
                         var authorName = ""
 
                         Log.e("searchdebug", title.toString())
@@ -94,7 +99,9 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                                     authorName = userDoc.getString("username").toString()
                                     Log.e("searchdebug", userDoc.getString("username").toString())
 
-                                    books.add(BookPreviewModel(title.toString(), authorName, cover.toString(), bookID))
+                                    books.add(BookPreviewModel(title.toString(), authorName, cover.toString(), bookID,
+                                        (rating as Long).toInt()
+                                    ))
 
 
                                     Log.e("searchdebug lol", books.toString())

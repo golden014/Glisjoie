@@ -7,5 +7,6 @@ class BookPreviewModel(
     val authorName: String,
     val cover: String,
     val bookID: String,
+    val rating: Int,
 //    val cover: String,
 ) {}

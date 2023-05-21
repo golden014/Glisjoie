@@ -84,7 +84,7 @@ class HomeActivity:AppCompatActivity() {
                     Log.e("debug", unit.title)
 
                     // Create BookPreviewModel object and add to list
-                    val book = BookPreviewModel(title = title, authorName = authorName, cover = cover, bookID = unit.bookID)
+                    val book = BookPreviewModel(title = title, authorName = authorName, cover = cover, bookID = unit.bookID, rating = unit.rating)
                     Log.e("homeActivity 70", title)
                     books.add(unit.title)
                 }

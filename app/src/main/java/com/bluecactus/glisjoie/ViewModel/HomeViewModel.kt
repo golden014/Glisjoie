@@ -10,6 +10,11 @@ class HomeViewModel: ViewModel() {
 
     fun getTopBooks(callback: (Array<BookPreviewModel>) -> Unit) {
         Log.e("home view model",  "hello")
-       bookRepo.getTopBooks(callback)
+
+       bookRepo.getTopBooks { books ->
+           val sortedBooks = books.sortedByDescending { it.rating }.toTypedArray()
+           callback(sortedBooks)
+
+       }
     }
 }
