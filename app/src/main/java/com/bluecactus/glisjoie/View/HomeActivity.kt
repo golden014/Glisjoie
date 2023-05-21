@@ -19,6 +19,8 @@ import com.bluecactus.glisjoie.ViewModel.BookPreviewAdapter
 import com.bluecactus.glisjoie.ViewModel.HomeViewModel
 import com.bluecactus.glisjoie.ViewModel.SearchViewModel
 import com.bluecactus.glisjoie.ViewModel.UserViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
@@ -34,89 +36,79 @@ class HomeActivity:AppCompatActivity() {
     lateinit var message: TextView
     var emptyData: Boolean = false
     lateinit var tes: TextView;
-
-
+    lateinit var homeViewModel: HomeViewModel
+    lateinit var botNavView: BottomNavigationView
+    val homeFragment: HomeFragment = HomeFragment()
+    val profileFragment: ProfileFragment = ProfileFragment()
+    val settingsFragment: SettingsFragment = SettingsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java);
+        botNavView = findViewById(R.id.bottom_nav)
+        supportFragmentManager.beginTransaction().replace(R.id.container_nav, homeFragment).commit()
+
+        botNavView.setOnItemSelectedListener( object: NavigationBarView.OnItemSelectedListener{
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+                when (item.itemId) {
+                    R.id.home_nav -> {
+                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, homeFragment).commit()
+                        return true
+                    }
+                    R.id.profile_nav -> {
+                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, homeFragment).commit()
+                        return true
+                    }
+                    R.id.settings_nav -> {
+                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, homeFragment).commit()
+                        return true
+                    }
+                }
+                return false
+            }
+
+        })
 
         message = findViewById<TextView>(R.id.noBooksMessage)
-
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-//        listView = findViewById(R.id.list_view)
-        
-        val books: Any = homeViewModel.getTopBooks { bookPreviewModels ->
-            emptyData = false
-            firstData = bookPreviewModels
-            adapter = BookPreviewAdapter(R.layout.list_item_book_preview, bookPreviewModels.toList())
-            recyclerView.adapter = adapter
-//            arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, createBooksFromUnits(bookPreviewModels))
-//            listView.setAdapter(arrayAdapter)
-        }
+//
+////        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+//        recyclerView = findViewById(R.id.recyclerView)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//
+////        listView = findViewById(R.id.list_view)
+//
+//        homeViewModel.currBooks.observe(this) { bookPreviewModels ->
+//            emptyData = false
+//            firstData = bookPreviewModels
+//            adapter = BookPreviewAdapter(R.layout.list_item_book_preview, bookPreviewModels.toList())
+//            recyclerView.adapter = adapter
+//        }
+//        homeViewModel.getTopBooks { bookPreviewModels ->
+//            emptyData = false
+//            firstData = bookPreviewModels
+//            adapter = BookPreviewAdapter(R.layout.list_item_book_preview, bookPreviewModels.toList())
+//            recyclerView.adapter = adapter
+//        }
 
 
     }
 
-//    private fun <T> ArrayAdapter(homeActivity: HomeActivity, simpleListItem1: Int, books: Array<String>): ArrayAdapter<T> {
-//        return ArrayAdapter(homeActivity, simpleListItem1, books)
-//    }
-
-//    fun getBookTitles(books: Unit): Array<String> {
-//        books.
-//    }
-
-    fun createBooksFromUnits(units: Any): MutableList<String> {
-        val books = mutableListOf<String>()
-
-        if (units is Array<*>) {
-            units.forEach { unit ->
-                Log.e("homeActivity 63", "num of units")
-                if (unit is BookPreviewModel) {
-                    val title = unit.title
-                    val authorName = unit.authorName
-                    val cover = unit.cover
-                    val bookID = unit.bookID
-                    Log.e("debug", unit.title)
-
-                    // Create BookPreviewModel object and add to list
-                    val book = BookPreviewModel(title = title, authorName = authorName, cover = cover, bookID = unit.bookID, rating = unit.rating)
-                    Log.e("homeActivity 70", title)
-                    books.add(unit.title)
-                }
-        }
-
-        }
-        for(i in books) {
-            Log.e("book", i)
-        }
-        return books
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         menuInflater.inflate(R.menu.menu, menu)
 
-        val userViewModel = ViewModelProvider(this@HomeActivity).get(UserViewModel::class.java)
+//        tes  = findViewById<TextView>(R.id.tes_name);
 
-        tes  = findViewById<TextView>(R.id.tes_name);
-
-//        userViewModel.currUser.observe(this) { user ->
-//            user?.let {
-//                tes.text = it.userDocumentID
-//            }
+//        val user = Firebase.auth.currentUser
+//        if (user != null) {
+//            tes.text = user.email
+//        } else {
+//            tes.text = "loading"
 //        }
-
-        val user = Firebase.auth.currentUser
-        if (user != null) {
-            tes.text = user.email
-        } else {
-            tes.text = "loading"
-        }
 
         val menuItem: MenuItem? = menu?.findItem(R.id.action_search)
         if (menuItem != null) {
@@ -129,10 +121,6 @@ class HomeActivity:AppCompatActivity() {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         // This method is called when the use r submits the search query
                         // Handle the search query here
-
-//                        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-//                        intent.putExtra("search_query", query)
-//                        startActivity(intent)
                         Log.e("homeActivity", "onquerytextsubmit trigger")
 
 
@@ -145,34 +133,29 @@ class HomeActivity:AppCompatActivity() {
                             for (book in bookPreviewModels) {
                                 Log.e("performSearchDebug", book.title)
                             }
-//                            recyclerView.adapter = adapter
-//                            adapter = BookPreviewAdapter(R.layout.list_item_book_preview, bookPreviewModels.toList())
-//                            adapter.updateData(bookPreviewModels)
+
 
                             Log.e("awikwok1", bookPreviewModels.size.toString())
                             if (bookPreviewModels.isEmpty()) {
-                                emptyData = true
+//                                emptyData = true
                                 Log.e("awikwok1", "bookPreviewModels is empty")
-
+                                homeViewModel.clearBooks()
+                                Log.e("nav_books", "No books found, clear book executed1")
                                 message.setText("No books found !")
+                            } else {
+                                homeViewModel.updateBooks(bookPreviewModels)
+                                Log.e("fragment3", "updated ")
                             }
-                            adapter.updateData(bookPreviewModels.toList())
+//                            homeViewModel.updateBooks(bookPreviewModels)
+//                            adapter.updateData(bookPreviewModels.toList())
                         }
 
-                        if (emptyData) {
-//                            adapter.updateData(arrayOfNulls<BookPreviewModel>(1).toList() as List<BookPreviewModel>)
-                            adapter.clearData()
-                            message.setText("No books found !")
-                        }
-
-
-
-
-//                        val searchResultsFragment = SearchResultsFragment.newInstance(query ?: "")
-//                        supportFragmentManager.beginTransaction()
-//                            .replace(R.id.fragment_container, searchResultsFragment)
-//                            .addToBackStack(null)
-//                            .commit()
+//                        if (emptyData) {
+////                            adapter.clearData()
+//                            homeViewModel.clearBooks()
+//                            Log.e("nav_books", "No books found, clear book executed")
+//                            message.setText("No books found !")
+//                        }
 
                         return false
                     }
@@ -209,8 +192,15 @@ class HomeActivity:AppCompatActivity() {
 
                 override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
                     emptyData = false
-                    adapter.updateData(firstData.toList())
+//                    adapter.updateData(firstData.toList())
                     message.text = ""
+//                    homeViewModel.currBooks.observe(this@HomeActivity) { bookPreviewModels ->
+//                        emptyData = false
+//                        firstData = bookPreviewModels
+//                        adapter = BookPreviewAdapter(R.layout.list_item_book_preview, bookPreviewModels.toList())
+//                        recyclerView.adapter = adapter
+//                    }
+                    homeViewModel.getTopBooks()
                     return true
                 }
             })
@@ -228,8 +218,8 @@ class HomeActivity:AppCompatActivity() {
                 // Handle the "up" button press here
                 // For example, you can clear the search query, close the search view, or perform other actions as needed
 
-
-                adapter.updateData(firstData.toList())
+                homeViewModel.getTopBooks()
+//                adapter.updateData(firstData.toList())
                 Log.e("return", "lmaoo")
                 onBackPressed() // This will navigate back to the previous activity/fragment in the back stack
                 true

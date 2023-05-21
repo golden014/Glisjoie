@@ -30,6 +30,7 @@ class BookPreviewAdapter(
         internal var itemLayout: RelativeLayout = itemView.findViewById(R.id.preview_card)
     }
     fun updateData(newBookPreviewModels: List<BookPreviewModel>) {
+        clearData()
         this.objects = newBookPreviewModels
         notifyDataSetChanged()
     }
