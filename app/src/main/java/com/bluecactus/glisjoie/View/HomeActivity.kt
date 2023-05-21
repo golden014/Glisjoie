@@ -210,6 +210,7 @@ class HomeActivity:AppCompatActivity() {
                 override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
                     emptyData = false
                     adapter.updateData(firstData.toList())
+                    message.text = ""
                     return true
                 }
             })
