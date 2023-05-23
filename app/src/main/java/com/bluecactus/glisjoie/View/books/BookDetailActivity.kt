@@ -15,6 +15,7 @@ import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.ViewModel.BookViewModel
 import com.bluecactus.glisjoie.ViewModel.ImageSelectionViewModel
 import com.bluecactus.glisjoie.ViewModel.UserViewModel
+import com.bluecactus.glisjoie.ViewModel.ViewHistoryViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
 class BookDetailActivity : AppCompatActivity() {
@@ -38,25 +39,33 @@ class BookDetailActivity : AppCompatActivity() {
     //view models
     private lateinit var bookViewModel: BookViewModel
     private lateinit var userViewModel: UserViewModel
+    private lateinit var viewHistoryViewModel: ViewHistoryViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
 
-
+        var bookId = intent.getStringExtra("bookID")
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         bookViewModel = ViewModelProvider(this).get(BookViewModel::class.java)
+        viewHistoryViewModel = ViewModelProvider(this).get(ViewHistoryViewModel::class.java)
 
         userViewModel.getCurrUser() { it ->
             currUser = it
-            Log.e("bookDetail1", "currUsername: " + currUser.username)
+//            Log.e("bookDetail1", "currUsername: " + currUser.username)
 
             var authorId = intent.getStringExtra("authorID")
+
+            viewHistoryViewModel.updateHistory(currUser.userDocumentID, bookId as String)
 
             if (currUser.userDocumentID == authorId) {
                 Log.e("bookDetail1", "authorIDIntent: " + authorId)
                 Log.e("bookDetail1", "authorID: " + currUser.userDocumentID)
+        //        TODO: IMPORTANT!! masukin intent filter ke edit books activity
+                //atau mau buat satu icon edit gtu yg bakalan visible kalau dia adalah author yg redirect ke
+                //edit books activity
+
             } else {
                 Log.e("bookDetail1", "bukan punya curr user")
                 Log.e("bookDetail1", "authorIDIntent: " + authorId)
@@ -72,7 +81,7 @@ class BookDetailActivity : AppCompatActivity() {
         bookDescription = findViewById(R.id.bookDescription)
         bookRating.setIsIndicator(true)
 
-        var bookId = intent.getStringExtra("bookID")
+//        var bookId = intent.getStringExtra("bookID")
 //        TODO: IMPORTANT!! uncomment when receiving put extra
         //bookId = intent.getStringExtra("KEYNAME")
 
