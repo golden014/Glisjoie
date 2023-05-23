@@ -48,7 +48,8 @@ class SettingsFragment : Fragment() {
         }
 
         adminSettingsLayout.setOnClickListener{
-            //TODO:direct ke admin setting
+            val intent = Intent(requireActivity(), AdminPanelActivity::class.java)
+            startActivity(intent)
         }
 
         credentialSettingsLayout.setOnClickListener{
