@@ -82,7 +82,7 @@ class BookModel(
     }
 
 
-    fun createNewBook(newProduct: BookModel): String? {
+    fun createNewBook(newProduct: BookModel, callback: (String?) -> Unit) {
         if (newProduct.userID == null) {
             newProduct.userID = "1"
         }
@@ -92,25 +92,32 @@ class BookModel(
         this.description = newProduct.description
         this.userID = newProduct.userID
         db = Firebase.firestore
-
+        var message = ""
         uploadImage { downloadUrl ->
             if (downloadUrl != null) {
                 // upload the book with the downloadUrl
                 imageLink = downloadUrl
                 Log.d("BookModel", "Success upload with link $downloadUrl")
                 uploadBook { response ->
-                    message = response
+                    if (response != null) {
+                        message = response
+                        Log.d("BookModel", "createNewBook: $message")
+                    }
                 }
+                message = "Upload success"
+                Log.d("BookModel", "createNewBook: $message")
+                callback(message)
             } else {
                 message = "Fail to generate download URL"
                 Log.wtf("BookModel", message)
+                callback(message)
             }
         }
-        return message
     }
 
 
     private fun uploadBook(callback: (String?) -> Unit) {
+        var message = "";
         Log.wtf("BookModel", "Sending upload request...")
         db?.collection("books")
             ?.add(this)
@@ -118,11 +125,11 @@ class BookModel(
                 Log.d("awikwok", "DocumentSnapshot added with ID: ${documentReference.id}")
                 message = "Successfully created new book"
                 Log.wtf("BookModel", message)
+                callback(message);
             }?.addOnFailureListener {
                 message = "Failed to upload a new book, please try again"
+                callback(message);
             }
-
-
     }
 
 }

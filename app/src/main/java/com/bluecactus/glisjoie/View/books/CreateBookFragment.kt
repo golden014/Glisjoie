@@ -1,6 +1,8 @@
 package com.bluecactus.glisjoie.View.books
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +12,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.bluecactus.glisjoie.Model.BookModel
+import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.Repository.CommentRepository
 import com.bluecactus.glisjoie.ViewModel.BookViewModel
-import com.bluecactus.glisjoie.ViewModel.HomeViewModel
 import com.bluecactus.glisjoie.ViewModel.ImageSelectionViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,6 +48,7 @@ class CreateBookFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         //Membuat instance viewmodel
         viewModel=  ViewModelProvider(requireActivity(), ImageSelectionViewModel.Factory(this as CreateBookFragment)).get(ImageSelectionViewModel::class.java);
@@ -55,7 +60,6 @@ class CreateBookFragment : Fragment() {
 
         addBookBtn = view.findViewById<Button>(R.id.AddBookBtn)
         selectImageBtn = view.findViewById<Button>(R.id.selectImageBtn)
-
 
         //Inisialiasi gambar awal kucing no image
         imageView.setImageResource(R.drawable.image)
@@ -80,7 +84,9 @@ class CreateBookFragment : Fragment() {
             if(message != ""){
                 AlertDialog.Builder(this.requireContext())
                     .setMessage(message)
-                    .setPositiveButton("OK", null)
+                    .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                        Log.d("A", "onViewCreated:TROLOLO ")
+                    })
                     .create()
                     .show()
             }

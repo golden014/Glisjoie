@@ -1,6 +1,7 @@
 package com.bluecactus.glisjoie.ViewModel
 
 import android.net.Uri
+import android.os.Message
 import android.util.Log
 import android.widget.ImageView
 import android.widget.RatingBar
@@ -47,7 +48,7 @@ class BookViewModel : ViewModel() {
                 null,
                 imageURI,
                 Date(),
-                null,
+                0f,
                 null
             )
             Log.wtf("BookModel", "This is running")
@@ -57,7 +58,10 @@ class BookViewModel : ViewModel() {
             validateUri(imageURI)
 
             if (message.isBlank()) {
-                message = uploadBookRequest()
+                uploadBookRequest(){ str->
+                    response.value = str
+                }
+                Log.d("BookViewModel", "createBook: with message$message")
             } else {
                 response.value = message
             }
@@ -100,9 +104,10 @@ class BookViewModel : ViewModel() {
         }
     }
 
-    fun uploadBookRequest(): String {
-        book.createNewBook(book)
-        return message
+    fun uploadBookRequest(callback:(String) -> Unit) {
+        book.createNewBook(book){str ->
+            callback(str!!)
+        }
     }
 
     fun updateData(bookCover: ImageView, bookTitle: TextView, bookAuthor: TextView, bookRating: RatingBar, bookDescription: TextView) {
@@ -111,7 +116,6 @@ class BookViewModel : ViewModel() {
             Picasso.get()
                 .load(book.imageLink)
                 .into(bookCover)
-
             bookTitle.text = book.bookTitle
             bookAuthor.text = book.author
             bookRating.rating = book.rating?.toFloat()!!
