@@ -83,5 +83,62 @@ class HistoryRepository {
         }
     }
 
-//    fun getHistoryWithFilter()
+
+    fun searchViewHistory(userID: String, subString: String, callback: (Array<ViewHistoryModel>) -> Unit) {
+        val booksHistory = mutableListOf<ViewHistoryModel>()
+
+        val viewHistoryRef =
+            db.collection("users")
+                .document(userID)
+                .collection("viewHistory")
+
+        viewHistoryRef.whereEqualTo("isDeleted", "false").get().addOnSuccessListener { querySnapshot ->
+            for (doc in querySnapshot.documents) {
+                val bookID = doc.getString("bookID")
+                val date = doc.getDate("date").toString()
+                var cover: String
+                var bookTitle: String
+
+                db.collection("books")
+                    .document(bookID as String)
+                    .get()
+                    .addOnSuccessListener{ bookDoc ->
+
+                        bookTitle = bookDoc.getString("bookTitle").toString()
+                        //kalau misalnya title nya itu match dengan substring nya
+                        if (bookTitle.contains(subString)) {
+                            cover = bookDoc.getString("imageLink").toString()
+                            booksHistory.add(ViewHistoryModel(bookTitle, cover, date, doc.id))
+                            callback(booksHistory.toTypedArray())
+                        }
+
+                    }
+            }
+
+            if (booksHistory.isEmpty()) {
+                callback(emptyArray())
+            }
+        }
+    }
+
+    //utk yg filtered
+    //ambil filtered dlu, for each elemen yg di filtered ganti status isDeleted
+
+    //delete single
+    fun deleteSingleViewHistory(userID: String, viewHistoryID: String, callback: (Int) -> Unit) {
+        val viewHistoryRef =
+            db.collection("users")
+                .document(userID)
+                .collection("viewHistory")
+
+        viewHistoryRef
+            .document(viewHistoryID)
+            .update("isDeleted", "true")
+            .addOnSuccessListener {
+                callback(200)
+            }
+            .addOnFailureListener{
+                callback(500)
+            }
+    }
 }

@@ -52,5 +52,25 @@ class ViewHistoryViewModel : ViewModel() {
         }
     }
 
+    //search
+    fun searchViewHistory(userID: String, subString: String,callback: (Array<ViewHistoryModel>) -> Unit) {
+        viewHistoryRepository.searchViewHistory(userID, subString) { historyArray ->
+            if (historyArray.isNotEmpty()) {
+                callback(sortObjectsByDate(historyArray).toTypedArray())
+            } else {
+                callback(emptyArray())
+            }
+
+        }
+    }
+
+    fun deleteSingleViewHistory(userID: String, viewHistoryID: String, callback: (Int) -> Unit) {
+        viewHistoryRepository.deleteSingleViewHistory(userID, viewHistoryID) {
+            callback(it)
+        }
+    }
+
+
+
 
 }
