@@ -1,6 +1,7 @@
 package com.bluecactus.glisjoie.Repository
 
 import android.util.Log
+import com.bluecactus.glisjoie.Model.ViewHistoryModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
@@ -51,5 +52,9 @@ class HistoryRepository {
                     }
             }
         }
+    }
+
+    fun getViewHistory(userID: String, callback: (Array<ViewHistoryModel>) -> Unit) {
+        //TODO: lengkapin
     }
 }

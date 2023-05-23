@@ -56,7 +56,6 @@ class BookPreviewAdapter(
                 override fun onSuccess() {
                     Log.d("Picasso", "Image loaded successfully")
                 }
-
                 override fun onError(e: Exception) {
                     Log.e("Picasso", "Error loading image", e)
                 }
