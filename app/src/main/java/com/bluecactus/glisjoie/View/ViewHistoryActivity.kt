@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,9 @@ class ViewHistoryActivity : AppCompatActivity() {
     lateinit var historyViewModel: ViewHistoryViewModel
     lateinit var userViewModel: UserViewModel
     lateinit var currUser: UserModel
+
+//    //filter menu
+//    lateinit var todayHistory:
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,14 @@ class ViewHistoryActivity : AppCompatActivity() {
                     Log.e("viewHistory", historyArray[0].title)
                 }
 
+//            historyViewModel.getFilteredHistory(currUser.userDocumentID, 1) { historyArray ->
+//                recyclerView = findViewById(R.id.history_recycler_view)
+//                recyclerView.layoutManager = LinearLayoutManager(this)
+//
+//                adapter = ViewHistoryAdapter(R.layout.list_item_history_view, historyArray.toList())
+//                recyclerView.adapter = adapter
+
+
 //                adapter.updateData(historyArray.toList())
 
             }
@@ -63,5 +75,34 @@ class ViewHistoryActivity : AppCompatActivity() {
 
         menuInflater.inflate(R.menu.menu_view_history, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        //saat menu yg filter diklik
+        when (item.itemId) {
+            R.id.view_today_history -> {
+                historyViewModel.getFilteredHistory(currUser.userDocumentID, 1) {historyArray ->
+                    adapter.updateData(historyArray.toList())
+                }
+            }
+            R.id.view_last_5_days -> {
+                historyViewModel.getFilteredHistory(currUser.userDocumentID, 5) {historyArray ->
+                    adapter.updateData(historyArray.toList())
+                }
+            }
+            R.id.view_1_week -> {
+                historyViewModel.getFilteredHistory(currUser.userDocumentID, 7) {historyArray ->
+                    adapter.updateData(historyArray.toList())
+                }
+            }
+            R.id.view_3_week -> {
+                historyViewModel.getFilteredHistory(currUser.userDocumentID, 21) {historyArray ->
+                    adapter.updateData(historyArray.toList())
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
