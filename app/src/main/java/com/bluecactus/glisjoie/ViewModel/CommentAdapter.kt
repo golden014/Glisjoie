@@ -18,7 +18,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
-class CommentAdapter(private val id : Int, private val comments: List<CommentModel>) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+class CommentAdapter(private val id : Int, private var comments: List<CommentModel>) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 
     public class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var profileImage: CircleImageView? = itemView.findViewById(R.id.profileImage)
@@ -26,6 +26,16 @@ class CommentAdapter(private val id : Int, private val comments: List<CommentMod
         internal var commentContent: TextView = itemView.findViewById(R.id.commentContent)
     }
 
+    fun updateData(comments: List<CommentModel>) {
+        clearData()
+        this.comments = comments
+        notifyDataSetChanged()
+    }
+
+    private fun clearData() {
+        this.comments = emptyList()
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -49,8 +59,6 @@ class CommentAdapter(private val id : Int, private val comments: List<CommentMod
                     Log.e("Picasso", "Error loading image", e)
                 }
             })
-
-
         holder.commentRating?.rating = comment.rating!!;
         holder.commentContent?.text = comment.description;
     }

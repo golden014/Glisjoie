@@ -23,7 +23,7 @@ class CommentRepository {
                 .add(a)
     }
 
-    fun getCommentByBookID(Book:BookModel, callback: (ArrayList<CommentModel>) -> Unit?) {
+    fun getCommentByBookID(Book:BookModel, callback: (ArrayList<CommentModel>) -> Unit) {
 
         db.collection("books")
             .document(Book.bookID!!)

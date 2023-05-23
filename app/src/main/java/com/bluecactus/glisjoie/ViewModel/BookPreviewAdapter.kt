@@ -60,8 +60,6 @@ class BookPreviewAdapter(
                     Log.e("Picasso", "Error loading image", e)
                 }
             })
-
-
         holder.textViewTitle?.text = bookPreview.title
         holder.textViewAuthor?.text = bookPreview.authorName
         val context = holder.itemView.context

@@ -11,10 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bluecactus.glisjoie.Model.BookModel
+import com.bluecactus.glisjoie.Model.CommentModel
 import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.Repository.CommentRepository
 import com.bluecactus.glisjoie.ViewModel.*
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlin.math.log
 
 class BookDetailActivity : AppCompatActivity() {
 
@@ -40,6 +44,9 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var viewHistoryViewModel: ViewHistoryViewModel
 
+    //Data
+    private var arr : ArrayList<CommentModel> = ArrayList<CommentModel>();
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,13 +56,32 @@ class BookDetailActivity : AppCompatActivity() {
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         bookViewModel = ViewModelProvider(this).get(BookViewModel::class.java)
         viewHistoryViewModel = ViewModelProvider(this).get(ViewHistoryViewModel::class.java)
+
         recyclerView = findViewById(R.id.detailCommentRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this@BookDetailActivity)
+        CommentRepository().getCommentByBookID(
+            BookModel("",
+            "",
+            "8jmeFAsRMDQsCDJ90gYu",
+            "",
+            "",
+            "",
+            null,
+                null,
+                null,
+                null,
+                "")){ resCall ->
+            for(i in 0 until resCall.size){
+                Log.d("ASDWAWDD", "onCreate: "+ resCall.get(i).description)
+            }
+            arr = resCall
+            adapter = CommentAdapter(R.layout.item_comment, mutableListOf());
+            recyclerView.layoutManager = LinearLayoutManager(this@BookDetailActivity)
+            recyclerView.adapter = adapter;
+            adapter.updateData(arr)
+        };
 
         userViewModel.getCurrUser() { it ->
             currUser = it
-//            Log.e("bookDetail1", "currUsername: " + currUser.username)
-
             var authorId = intent.getStringExtra("authorID")
 
             viewHistoryViewModel.updateHistory(currUser.userDocumentID, bookId as String)
