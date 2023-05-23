@@ -59,6 +59,14 @@ class HomeActivity:AppCompatActivity() {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java);
         botNavView = findViewById(R.id.bottom_nav)
 
+        val auth = Firebase.auth
+
+        //push user ke login kalau blm login
+        if (auth.currentUser == null) {
+            val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
 //        val tempImage = "https://firebasestorage.googleapis.com/v0/b/glisjoie.appspot.com/o/images%2F74006291-a2e4-496a-8afd-b6860c9d0511.jpg?alt=media&token=06955569-cd08-49be-ab36-32cdfd879296"
 //
 //        val imageView: ImageView = findViewById(R.id.center_image)
