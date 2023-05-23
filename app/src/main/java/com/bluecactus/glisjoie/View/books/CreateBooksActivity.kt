@@ -15,7 +15,6 @@ class CreateBooksActivity : AppCompatActivity() {
 
     private lateinit var viewModel : ImageSelectionViewModel
     private lateinit var bookViewModel : BookViewModel
-
     private lateinit var selectImageBtn : Button
     private lateinit var addBookBtn : Button
     private lateinit var imageView : ImageView
@@ -26,7 +25,7 @@ class CreateBooksActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_product)
 
         //Membuat instance viewmodel
-        viewModel = ViewModelProvider(this, ImageSelectionViewModel.Factory(this as CreateBooksActivity)).get(ImageSelectionViewModel::class.java)
+        viewModel = ViewModelProvider(this, ImageSelectionViewModel.Factory(this as CreateBookFragment)).get(ImageSelectionViewModel::class.java)
         bookViewModel = ViewModelProvider(this)[BookViewModel::class.java]
         //Ngambil component di xml
         imageView = findViewById<ImageView>(R.id.CoverImage)

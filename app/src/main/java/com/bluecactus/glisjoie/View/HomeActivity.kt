@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bluecactus.glisjoie.Model.BookPreviewModel
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.View.books.CreateBookFragment
 import com.bluecactus.glisjoie.ViewModel.BookPreviewAdapter
 import com.bluecactus.glisjoie.ViewModel.HomeViewModel
 import com.bluecactus.glisjoie.ViewModel.SearchViewModel
@@ -39,6 +40,7 @@ class HomeActivity:AppCompatActivity() {
     lateinit var homeViewModel: HomeViewModel
     lateinit var botNavView: BottomNavigationView
     val homeFragment: HomeFragment = HomeFragment()
+    val createBookFragment: CreateBookFragment = CreateBookFragment();
     val profileFragment: ProfileFragment = ProfileFragment()
     val settingsFragment: SettingsFragment = SettingsFragment()
 
@@ -56,6 +58,10 @@ class HomeActivity:AppCompatActivity() {
                 when (item.itemId) {
                     R.id.home_nav -> {
                         supportFragmentManager.beginTransaction().replace(R.id.container_nav, homeFragment).commit()
+                        return true
+                    }
+                    R.id.add_book_nav -> {
+                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, createBookFragment).commit()
                         return true
                     }
                     R.id.profile_nav -> {

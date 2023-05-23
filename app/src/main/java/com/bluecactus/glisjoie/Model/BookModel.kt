@@ -21,7 +21,7 @@ class BookModel(
     var imageURI: Uri?,
     val date: Date?,
     var rating: Float?,
-    var author: String?
+    var author: String?,
 ) {
     private fun uploadImage(callback: (String?) -> Unit) {
         val storageRef = FirebaseStorage.getInstance().reference
@@ -106,7 +106,6 @@ class BookModel(
                 Log.wtf("BookModel", message)
             }
         }
-
         return message
     }
 

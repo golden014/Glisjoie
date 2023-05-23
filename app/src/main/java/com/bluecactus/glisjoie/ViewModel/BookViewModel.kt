@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bluecactus.glisjoie.Model.BookModel
 import com.bluecactus.glisjoie.Repository.BookRepository
+import com.google.firebase.firestore.auth.User
 import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.math.log
@@ -33,38 +34,42 @@ class BookViewModel : ViewModel() {
 
     fun createBook(imageURI: Uri?, bookTitle: String, bookDescription: String) {
         //TODO: UPDATE THIS BookModel Constructor
-
+        val userViewModel = UserViewModel();
         message = ""
+        userViewModel.getCurrUser(){ it ->
+            book = BookModel(
+                null,
+                bookTitle,
+                null,
+                it.userDocumentID,
+                bookDescription,
+                null,
+                null,
+                imageURI,
+                Date(),
+                null,
+                null
+            )
+            Log.wtf("BookModel", "This is running")
+            Log.wtf("BookModel", book.imageURI.toString())
+            validateString(bookTitle)
+            validateDescription(bookDescription)
+            validateUri(imageURI)
 
-        book = BookModel(
-            null,
-            bookTitle,
-            null,
-            null,
-            bookDescription,
-            null,
-            null,
-            imageURI,
-            Date(),
-            null,
-            null
-        )
-        Log.wtf("BookModel", "This is running")
-        Log.wtf("BookModel", book.imageURI.toString())
-        validateString(bookTitle)
-        validateDescription(bookDescription)
-        validateUri(imageURI)
+            if (message.isBlank()) {
+                message = uploadBookRequest()
+            } else {
+                response.value = message
+            }
 
-        if (message.isBlank()) {
-            message = uploadBookRequest()
-        } else {
-            response.value = message
+            Log.wtf("BookModel", "BookViewModel: $message")
+            if (message.isNotBlank()) {
+                response.value = message
+            }
         }
 
-        Log.wtf("BookModel", "BookViewModel: $message")
-        if (message.isNotBlank()) {
-            response.value = message
-        }
+
+
     }
 
     private fun validateDescription(bookDescription: String) {

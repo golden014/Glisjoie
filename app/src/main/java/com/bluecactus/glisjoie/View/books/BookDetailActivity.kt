@@ -9,13 +9,11 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.R
-import com.bluecactus.glisjoie.ViewModel.BookViewModel
-import com.bluecactus.glisjoie.ViewModel.ImageSelectionViewModel
-import com.bluecactus.glisjoie.ViewModel.UserViewModel
-import com.bluecactus.glisjoie.ViewModel.ViewHistoryViewModel
+import com.bluecactus.glisjoie.ViewModel.*
 import de.hdodenhof.circleimageview.CircleImageView
 
 class BookDetailActivity : AppCompatActivity() {
@@ -26,7 +24,8 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var bookAuthor:TextView
     private lateinit var bookDescription:TextView
     private lateinit var bookRating:RatingBar
-    private lateinit var bookComments:RecyclerView
+    private lateinit var recyclerView:RecyclerView
+    private lateinit var adapter: CommentAdapter
 
     //comment component
     private lateinit var bookCommentField:EditText
@@ -50,6 +49,8 @@ class BookDetailActivity : AppCompatActivity() {
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         bookViewModel = ViewModelProvider(this).get(BookViewModel::class.java)
         viewHistoryViewModel = ViewModelProvider(this).get(ViewHistoryViewModel::class.java)
+        recyclerView = findViewById(R.id.detailCommentRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this@BookDetailActivity)
 
         userViewModel.getCurrUser() { it ->
             currUser = it

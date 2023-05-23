@@ -77,7 +77,6 @@ class BookPreviewAdapter(
     }
 
     override fun getItemCount(): Int {
-//
         return objects.size
     }
 }

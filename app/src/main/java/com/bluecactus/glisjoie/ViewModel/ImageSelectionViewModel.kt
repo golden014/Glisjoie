@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bluecactus.glisjoie.Model.ImageModel
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.View.HomeActivity
+import com.bluecactus.glisjoie.View.books.CreateBookFragment
 import com.bluecactus.glisjoie.View.books.CreateBooksActivity
 
-class ImageSelectionViewModel(private val activity: CreateBooksActivity) : ViewModel() {
+class ImageSelectionViewModel(private val fragment: CreateBookFragment) : ViewModel() {
 
 
     private val emptyImage = R.drawable.image
@@ -21,7 +23,7 @@ class ImageSelectionViewModel(private val activity: CreateBooksActivity) : ViewM
     var imageData : MutableLiveData<ImageModel> = MutableLiveData<ImageModel>(defaultModel)
 
     init {
-        pickImage = activity.registerForActivityResult(
+        pickImage = fragment.registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri: Uri? ->
             imageData.value = ImageModel(R.drawable.image, uri, null)
@@ -46,10 +48,10 @@ class ImageSelectionViewModel(private val activity: CreateBooksActivity) : ViewM
         }
     }
 
-    class Factory(private val activity: CreateBooksActivity) : ViewModelProvider.Factory {
+    class Factory(private val fragment: CreateBookFragment) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ImageSelectionViewModel::class.java)) {
-                return ImageSelectionViewModel(activity) as T
+                return ImageSelectionViewModel(fragment) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
