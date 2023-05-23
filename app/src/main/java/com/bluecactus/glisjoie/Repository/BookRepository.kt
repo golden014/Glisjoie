@@ -44,7 +44,7 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                                                                             it,
                                                                             it2,
                                                                             bookDoc.id,
-                                                                            (it3 as Long).toInt(),
+                                                                            (it3 as Number).toDouble(),
                                                                             it4
                                                                         )
                                                                     }
@@ -104,7 +104,7 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                                     Log.e("searchdebug", userDoc.getString("username").toString())
 
                                     books.add(BookPreviewModel(title.toString(), authorName, cover.toString(), bookID,
-                                        (rating as Long).toInt(), userDoc.id
+                                        (rating as Number).toDouble(), userDoc.id
                                     ))
 
 

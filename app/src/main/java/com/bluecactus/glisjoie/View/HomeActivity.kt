@@ -1,5 +1,6 @@
 package com.bluecactus.glisjoie.View
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -41,6 +42,7 @@ class HomeActivity:AppCompatActivity() {
     val homeFragment: HomeFragment = HomeFragment()
     val profileFragment: ProfileFragment = ProfileFragment()
     val settingsFragment: SettingsFragment = SettingsFragment()
+    val viewHistoryFragment: ViewHistoryFragment = ViewHistoryFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,9 @@ class HomeActivity:AppCompatActivity() {
                         return true
                     }
                     R.id.profile_nav -> {
-                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, homeFragment).commit()
+//                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, viewHistoryFragment).commit()
+                        val intent = Intent(this@HomeActivity, ViewHistoryActivity::class.java)
+                        startActivity(intent)
                         return true
                     }
                     R.id.settings_nav -> {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    <item-->
+<!--        android:id="@+id/menu_history"-->
+<!--        android:title="BurgerHistory"-->
+<!--        android:icon="@drawable/ic_baseline_menu_24"-->
+<!--        >-->
+<!--        <menu>-->
+            <item
+                android:id="@+id/delete_all_item"
+                android:title="Delete All"/>
+
+            <item
+                android:id="@+id/delete_by_date"
+                android:title="Delete by Date">
+
+                <menu>
+                    <item
+                        android:id="@+id/delete_today"
+                        android:title="Delete today history" />
+
+                    <item
+                        android:id="@+id/delete_last_5_days"
+                        android:title="Delete last 5 days history" />
+
+                    <item
+                        android:id="@+id/delete_last_week"
+                        android:title="Delete last week history" />
+
+                    <item
+                        android:id="@+id/delete_last_3_week"
+                        android:title="Delete last 3 week history" />
+
+                </menu>
+            </item>
+
+            <item
+                android:id="@+id/filter_history"
+                android:title="Filter History" >
+
+                <menu>
+                    <item
+                        android:id="@+id/view_today_history"
+                        android:title="Today's history" />
+
+                    <item
+                        android:id="@+id/view_last_5_days"
+                        android:title="5 days history" />
+
+                    <item
+                        android:id="@+id/view_1_week"
+                        android:title="1 week history" />
+
+                    <item
+                        android:id="@+id/view_3_week"
+                        android:title="3 week history" />
+                </menu>
+            </item>
+
+        </menu>
+<!--    </item>-->
+<!--</menu>-->
