@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -24,13 +25,15 @@ class ViewHistoryAdapter(
     public class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var bookImage: ImageView = itemView.findViewById(R.id.book_image_history)
         internal var bookTitle: TextView = itemView.findViewById(R.id.title_view_history)
-        internal var authorName: TextView = itemView.findViewById(R.id.author_view_history)
+//        internal var authorName: TextView = itemView.findViewById(R.id.author_view_history)
         internal var date: TextView = itemView.findViewById(R.id.date_view_history)
-        internal var deleteButton: Button = itemView.findViewById(R.id.single_delete_history_button)
+        internal var deleteButton: ImageButton = itemView.findViewById(R.id.single_delete_history_button)
     }
 
     fun updateData(newViewHistoryModels: List<ViewHistoryModel>) {
         clearData()
+        this.objects = newViewHistoryModels
+        notifyDataSetChanged()
     }
 
     fun clearData() {
@@ -60,11 +63,12 @@ class ViewHistoryAdapter(
             })
 
         holder.bookTitle.text = bookHistory.title
-        holder.authorName.text = bookHistory.authorName
+//        holder.authorName.text = bookHistory.authorName
         holder.date.text = bookHistory.date
 
         holder.deleteButton.setOnClickListener {
-            // TODO: tambahin soft delete per item
+            // TODO: tambahin soft delete per item, update status holder
+
         }
 
     }

@@ -1,6 +1,7 @@
 package com.bluecactus.glisjoie.Repository
 
 import android.util.Log
+import com.bluecactus.glisjoie.Model.BookPreviewModel
 import com.bluecactus.glisjoie.Model.ViewHistoryModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
@@ -54,7 +55,33 @@ class HistoryRepository {
         }
     }
 
-    fun getViewHistory(userID: String, callback: (Array<ViewHistoryModel>) -> Unit) {
-        //TODO: lengkapin
+    fun getAllViewHistory(userID: String, callback: (Array<ViewHistoryModel>) -> Unit) {
+        val booksHistory = mutableListOf<ViewHistoryModel>()
+
+        val viewHistoryRef =
+            db.collection("users")
+                .document(userID)
+                .collection("viewHistory")
+
+        viewHistoryRef.whereEqualTo("isDeleted", "false").get().addOnSuccessListener { querySnapshot ->
+            for (doc in querySnapshot.documents) {
+                val bookID = doc.getString("bookID")
+                val date = doc.getDate("date").toString()
+                var cover: String
+                var bookTitle: String
+
+                db.collection("books")
+                    .document(bookID as String)
+                    .get()
+                    .addOnSuccessListener{ bookDoc ->
+                        bookTitle = bookDoc.getString("bookTitle").toString()
+                        cover = bookDoc.getString("imageLink").toString()
+                        booksHistory.add(ViewHistoryModel(bookTitle, cover, date, doc.id))
+                        callback(booksHistory.toTypedArray())
+                    }
+            }
+        }
     }
+
+//    fun getHistoryWithFilter()
 }
