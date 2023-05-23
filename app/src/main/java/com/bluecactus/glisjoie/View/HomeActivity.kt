@@ -1,11 +1,16 @@
 package com.bluecactus.glisjoie.View
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
@@ -25,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 
 class HomeActivity:AppCompatActivity() {
@@ -52,6 +58,38 @@ class HomeActivity:AppCompatActivity() {
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java);
         botNavView = findViewById(R.id.bottom_nav)
+
+//        val tempImage = "https://firebasestorage.googleapis.com/v0/b/glisjoie.appspot.com/o/images%2F74006291-a2e4-496a-8afd-b6860c9d0511.jpg?alt=media&token=06955569-cd08-49be-ab36-32cdfd879296"
+//
+//        val imageView: ImageView = findViewById(R.id.center_image)
+//        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/glisjoie.appspot.com/o/images%2F74006291-a2e4-496a-8afd-b6860c9d0511.jpg?alt=media&token=06955569-cd08-49be-ab36-32cdfd879296")
+//            .into(imageView)
+
+//        Picasso.get()
+//            .load(tempImage)
+//            .centerCrop()
+//            .resize(24, 24)
+//            .into(object : com.squareup.picasso.Target {
+//                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+////                    val drawable = BitmapDrawable(resources, bitmap)
+////                    drawable.setTintList(null) // remove tint
+////                    botNavView.menu.findItem(R.id.profile_nav).icon = drawable
+//                    val drawable = BitmapDrawable(resources, bitmap)
+//                    drawable.setTintList(null) // remove tint here
+//                    val menuIcon = botNavView.menu.findItem(R.id.profile_nav)
+//                    menuIcon.icon = drawable
+//                    (menuIcon.icon as BitmapDrawable).setTintList(null) // and remove tint here
+//                }
+//
+//                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+//                    // handle failure here
+//                }
+//
+//                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+//                    // you can use a placeholder here
+//                }
+//            })
+
         supportFragmentManager.beginTransaction().replace(R.id.container_nav, homeFragment).commit()
 
         botNavView.setOnItemSelectedListener( object: NavigationBarView.OnItemSelectedListener{
@@ -73,7 +111,7 @@ class HomeActivity:AppCompatActivity() {
                         return true
                     }
                     R.id.settings_nav -> {
-                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, homeFragment).commit()
+                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, settingsFragment).commit()
                         return true
                     }
                 }
@@ -118,6 +156,19 @@ class HomeActivity:AppCompatActivity() {
 //            tes.text = user.email
 //        } else {
 //            tes.text = "loading"
+//        }
+
+//        val tempPicture: MenuItem? = menu?.findItem(R.id.profile_nav)
+//        if (tempPicture != null) {
+//            val actionView = LayoutInflater.from(this).inflate(R.layout.custom_profile, null)
+//            tempPicture.actionView = actionView
+//
+//            val iconImageView = tempPicture.actionView?.findViewById<ImageView>(R.id.custom_profile_image_view)
+//
+//            Picasso
+//                .get()
+//                .load("https://firebasestorage.googleapis.com/v0/b/glisjoie.appspot.com/o/images%2F74006291-a2e4-496a-8afd-b6860c9d0511.jpg?alt=media&token=06955569-cd08-49be-ab36-32cdfd879296")
+//                .into(iconImageView)
 //        }
 
         val menuItem: MenuItem? = menu?.findItem(R.id.action_search)

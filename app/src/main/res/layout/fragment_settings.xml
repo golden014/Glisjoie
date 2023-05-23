@@ -1,16 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.SettingsFragment">
+    tools:context=".View.SettingsFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This is Settings fragment"
-        android:layout_centerInParent="true"
-        />
+        android:gravity="center"
+        android:text="Settings"
+        android:fontFamily="@font/katibeh"
+        android:textSize="40dp"
+        android:textColor="@color/black"/>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/credential_setting_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingHorizontal="50dp"
+        android:background="@color/light_gray"
+        android:layout_marginBottom="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/gear_logo_settings_page"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:layout_centerVertical="true"
+            app:tint="@color/pink" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Credential Setting"
+            android:fontFamily="@font/katibeh"
+            android:textSize="25dp"
+            android:layout_toRightOf="@id/gear_logo_settings_page"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/admin_setting_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingHorizontal="50dp"
+        android:background="@color/light_gray"
+        >
+
+        <ImageView
+            android:id="@+id/gear_logo_settings_page2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_baseline_settings_24"
+            android:layout_centerVertical="true"
+            app:tint="@color/pink" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Admin Setting"
+            android:fontFamily="@font/katibeh"
+            android:textSize="25dp"
+            android:layout_toRightOf="@id/gear_logo_settings_page2"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

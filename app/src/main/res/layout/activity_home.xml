@@ -52,9 +52,18 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu"
         android:background="@color/logo_cyan"
-        app:itemIconTint="@color/black"
+        app:itemIconTint="@null"
         app:itemTextColor="@color/black"
     />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/center_image"-->
+<!--        android:layout_width="27dp"-->
+<!--        android:layout_height="27dp"-->
+<!--        android:layout_marginLeft="240dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        />-->
 
 
 </RelativeLayout>

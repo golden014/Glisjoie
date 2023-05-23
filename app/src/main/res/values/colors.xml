@@ -11,4 +11,6 @@
     <color name="curr_auth_page_button">#50FFCB</color>
     <color name="other_auth_page_button">#7CB0FF</color>
     <color name="transparent">#00000000</color>
+    <color name="pink">#FF008A</color>
+    <color name="light_gray">#F1F1F1</color>
 </resources>
