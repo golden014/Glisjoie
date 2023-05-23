@@ -1,6 +1,7 @@
 package com.bluecactus.glisjoie.View.books
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -9,9 +10,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.ViewModel.BookViewModel
 import com.bluecactus.glisjoie.ViewModel.ImageSelectionViewModel
+import com.bluecactus.glisjoie.ViewModel.UserViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
 class BookDetailActivity : AppCompatActivity() {
@@ -29,15 +32,38 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var bookCommentIcon:CircleImageView
     private lateinit var bookCommentButton:Button
 
+    //curr user to check author or not
+    private lateinit var currUser: UserModel
+
     //view models
     private lateinit var bookViewModel: BookViewModel
+    private lateinit var userViewModel: UserViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
 
+
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         bookViewModel = ViewModelProvider(this).get(BookViewModel::class.java)
+
+        userViewModel.getCurrUser() { it ->
+            currUser = it
+            Log.e("bookDetail1", "currUsername: " + currUser.username)
+
+            var authorId = intent.getStringExtra("authorID")
+
+            if (currUser.userDocumentID == authorId) {
+                Log.e("bookDetail1", "authorIDIntent: " + authorId)
+                Log.e("bookDetail1", "authorID: " + currUser.userDocumentID)
+            } else {
+                Log.e("bookDetail1", "bukan punya curr user")
+                Log.e("bookDetail1", "authorIDIntent: " + authorId)
+                Log.e("bookDetail1", "authorID: " + currUser.userDocumentID)
+            }
+        }
+
 
         bookCover = findViewById(R.id.bookCover)
         bookTitle = findViewById(R.id.bookTitle)

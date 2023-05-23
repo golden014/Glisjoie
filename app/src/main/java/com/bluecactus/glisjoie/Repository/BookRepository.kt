@@ -38,13 +38,17 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                                                         bookDoc.getString("bookTitle")?.let { it1->
                                                             bookDoc.getString("imageLink")?.let { it2 ->
                                                                 bookDoc.get("rating")?.let { it3 ->
-                                                                    BookPreviewModel(
-                                                                        it1,
-                                                                        it,
-                                                                        it2,
-                                                                        bookDoc.id,
-                                                                        (it3 as Long).toInt()
-                                                                    )
+                                                                    bookDoc.getString("userID")?.let { it4 ->
+                                                                        BookPreviewModel(
+                                                                            it1,
+                                                                            it,
+                                                                            it2,
+                                                                            bookDoc.id,
+                                                                            (it3 as Long).toInt(),
+                                                                            it4
+                                                                        )
+                                                                    }
+
                                                                 }
 
                                                             }
@@ -100,7 +104,7 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                                     Log.e("searchdebug", userDoc.getString("username").toString())
 
                                     books.add(BookPreviewModel(title.toString(), authorName, cover.toString(), bookID,
-                                        (rating as Long).toInt()
+                                        (rating as Long).toInt(), userDoc.id
                                     ))
 
 

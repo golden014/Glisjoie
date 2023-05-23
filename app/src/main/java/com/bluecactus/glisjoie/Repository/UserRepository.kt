@@ -3,6 +3,7 @@ package com.bluecactus.glisjoie.Repository
 import android.util.Log
 import com.bluecactus.glisjoie.Model.UserModel
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -53,6 +54,27 @@ class UserRepository {
             .addOnFailureListener { exception ->
                 callback(false)
                 Log.e("register", exception.toString())
+            }
+    }
+
+    fun getCurrUser (callback: (result: UserModel) -> Unit){
+        val email = auth.currentUser?.email
+
+        usersCollection.whereEqualTo("email", email)
+            .get()
+            .addOnSuccessListener { it ->
+                if (!it.isEmpty) {
+                    val doc = it.documents[0]
+                    callback(UserModel(
+                        doc.id,
+                        doc.getString("email") as String,
+                        doc.getString("username") as String,
+                        doc.getString("status") as String,
+                        doc.getString("role") as String,
+                        doc.getString("profilePictureURL") as String
+                        ))
+                }
+
             }
     }
 

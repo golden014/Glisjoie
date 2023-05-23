@@ -71,6 +71,7 @@ class BookPreviewAdapter(
             Log.e("bookDetail", "clicked $context")
             val intent = Intent(context, BookDetailActivity::class.java)
             intent.putExtra("bookID", bookPreview.bookID)
+            intent.putExtra("authorID", bookPreview.authorID)
             context.startActivity(intent)
         }
     }

@@ -29,8 +29,6 @@ class EditBooksActivity : AppCompatActivity() {
         submitButton = findViewById<Button>(R.id.confirmEdit)
         viewModel = ViewModelProvider(this)[BookViewModel::class.java]
 
-
-
     }
 
 }
