@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -120,8 +121,97 @@ class ViewHistoryActivity : AppCompatActivity() {
                 }
                 searchMessage.text = ""
             }
+
+            //delete
+            R.id.delete_today -> {
+                //minta verify user
+                verify { userInput ->
+                    //kalau user agree
+                    if (userInput) {
+                        historyViewModel.deleteFiltered(currUser.userDocumentID, 1) {
+                            if (it == 200) {
+                                AlertDialog.Builder(this).setMessage("Delete Success !").show()
+                                adapter.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+
+            R.id.delete_last_5_days -> {
+                //minta verify user
+                verify { userInput ->
+                    //kalau user agree
+                    if (userInput) {
+                        historyViewModel.deleteFiltered(currUser.userDocumentID, 5) {
+                            if (it == 200) {
+                                AlertDialog.Builder(this).setMessage("Delete Success !").show()
+                                adapter.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+
+            R.id.delete_last_week -> {
+                //minta verify user
+                verify { userInput ->
+                    //kalau user agree
+                    if (userInput) {
+                        historyViewModel.deleteFiltered(currUser.userDocumentID, 7) {
+                            if (it == 200) {
+                                AlertDialog.Builder(this).setMessage("Delete Success !").show()
+                                adapter.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+
+            R.id.delete_last_3_week -> {
+                //minta verify user
+                verify { userInput ->
+                    //kalau user agree
+                    if (userInput) {
+                        historyViewModel.deleteFiltered(currUser.userDocumentID, 21) {
+                            if (it == 200) {
+                                AlertDialog.Builder(this).setMessage("Delete Success !").show()
+                                adapter.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+
+            R.id.delete_all_item -> {
+                verify { userInput ->
+                    if (userInput) {
+                        historyViewModel.deleteAllHistory(currUser.userDocumentID) {
+                            if (it == 200) {
+                                AlertDialog.Builder(this).setMessage("Delete Success !").show()
+                                adapter.clearData()
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    fun verify(callback: (Boolean) -> Unit) {
+        AlertDialog
+            .Builder(this)
+            .setMessage("Are you sure you want to clear your history ?")
+            .setPositiveButton("Yes") {dialog, _ ->
+                callback(true)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") {dialog, _ ->
+                callback(false)
+                dialog.dismiss()
+            }
+            .show()
     }
 }

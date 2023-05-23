@@ -76,33 +76,53 @@ class ViewHistoryAdapter(
         holder.date.text = bookHistory.date
 
         holder.deleteButton.setOnClickListener {
-            // TODO: tambahin soft delete per item, update status holder
-            val historyViewModel = ViewModelProvider(app).get(ViewHistoryViewModel::class.java)
-            val userViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
 
+            AlertDialog
+                .Builder(app)
+                .setMessage("Are you sure you want to delete this book history ?")
+                .setPositiveButton("Yes") {dialog, _ ->
+                    dialog.dismiss()
+                    val historyViewModel = ViewModelProvider(app).get(ViewHistoryViewModel::class.java)
+                    val userViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
 
-            var currUser: UserModel
+                    userViewModel.getCurrUser { it ->
+                        historyViewModel.deleteSingleViewHistory(it.userDocumentID, bookHistory.documentID) { result ->
+                            if (result == 200) {
+                                AlertDialog
+                                    .Builder(app)
+                                    .setMessage("Delete success !")
+                                    .show()
 
-            userViewModel.getCurrUser { it ->
-                currUser = it
-
-                historyViewModel.deleteSingleViewHistory(it.userDocumentID, bookHistory.documentID) { result ->
-                    if (result == 200) {
-                        AlertDialog
-                            .Builder(app)
-                            .setMessage("Delete success !")
-                            .show()
-
-                        historyViewModel.getViewHistory(it.userDocumentID) { it ->
-                            updateData(it.toList())
+                                historyViewModel.getViewHistory(it.userDocumentID) { it ->
+                                    updateData(it.toList())
+                                }
+                            }
                         }
+
                     }
                 }
-
-            }
+                .setNegativeButton("Cancel") {dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+            // TODO: tambahin soft delete per item, update status holder
 
 
         }
+
+    }
+
+    fun reloadData() {
+        val historyViewModel = ViewModelProvider(app).get(ViewHistoryViewModel::class.java)
+        val userViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
+
+        userViewModel.getCurrUser {
+            historyViewModel.getViewHistory(it.userDocumentID) { newData ->
+                updateData(newData.toList())
+            }
+        }
+
+
 
     }
 
