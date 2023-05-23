@@ -52,7 +52,7 @@
         android:minHeight="25dp"
         android:layout_gravity="center"
         android:padding="20dp"
-        android:background=""/>
+        android:background="@color/white"/>
 
 
 </LinearLayout>
