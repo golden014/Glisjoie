@@ -54,4 +54,10 @@ class UserViewModel: ViewModel() {
 
     }
 
+    fun actionBanUser(userID: String, newStatus: String, callback: (Int) -> Unit) {
+        userRepo.actionBanUser(userID, newStatus) {
+            callback(it)
+        }
+    }
+
 }
