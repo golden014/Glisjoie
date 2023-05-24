@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -41,10 +42,10 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var bookCommentField:EditText
     private lateinit var bookCommentIcon:CircleImageView
     private lateinit var bookCommentButton:Button
+    private lateinit var editBookButton:ImageView
 
     //curr user to check author or not
     private lateinit var currUser: UserModel
-
     //view models
     private lateinit var bookViewModel: BookViewModel
     private lateinit var userViewModel: UserViewModel
@@ -88,6 +89,8 @@ class BookDetailActivity : AppCompatActivity() {
             adapter.updateData(arr)
         };
 
+        editBookButton = findViewById(R.id.editButton)
+
         var authorId = intent.getStringExtra("authorID")
         userViewModel.getCurrUser() { it ->
             currUser = it
@@ -97,8 +100,9 @@ class BookDetailActivity : AppCompatActivity() {
             if (currUser.userDocumentID == authorId) {
                 Log.e("bookDetail1", "authorIDIntent: " + authorId)
                 Log.e("bookDetail1", "authorID: " + currUser.userDocumentID)
-
+                editBookButton.visibility = View.VISIBLE
             } else {
+                editBookButton.visibility = View.INVISIBLE
                 Log.e("bookDetail1", "bukan punya curr user")
                 Log.e("bookDetail1", "authorIDIntent: " + authorId)
                 Log.e("bookDetail1", "authorID: " + currUser.userDocumentID)
@@ -118,6 +122,12 @@ class BookDetailActivity : AppCompatActivity() {
         bookCommentRating = findViewById(R.id.detailCommentRating)
         bookCommentIcon = findViewById(R.id.detailCommentPicture)
         bookCommentButton = findViewById(R.id.bookDetailCommentBtn)
+
+
+        editBookButton.setOnClickListener {
+            val intent = Intent(this, EditBooksActivity::class.java).putExtra("bookID", bookId)
+            startActivity(intent)
+        }
 
         commentViewModel.response.observe(this) { message ->
             Log.d("TESTSADAW", "onCreate:" )

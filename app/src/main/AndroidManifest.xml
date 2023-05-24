@@ -29,6 +29,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".View.books.EditBooksActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".View.profile.ProfileActivity"
             android:exported="false" />
         <activity
