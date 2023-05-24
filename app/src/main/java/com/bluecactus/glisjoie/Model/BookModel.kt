@@ -27,6 +27,7 @@ class BookModel(
         val storageRef = FirebaseStorage.getInstance().reference
         val filename = UUID.randomUUID().toString() + ".jpg"
 
+
         storageRef.child("images/$filename").putFile(imageURI!!)
             .addOnSuccessListener { taskSnapshot ->
                 // Get the download URL for the image
@@ -131,6 +132,19 @@ class BookModel(
             }?.addOnFailureListener {
                 message = "Failed to upload a new book, please try again"
                 callback(message);
+            }
+    }
+
+    private fun updateBookByID(bookID: String, field: String, newValue: String, callback: (Int) -> Unit) {
+        val db = Firebase.firestore
+        db.collection("books")
+            .document(bookID)
+            .update(field, newValue)
+            .addOnSuccessListener {
+                callback(200)
+            }
+            .addOnFailureListener{
+                callback(500)
             }
     }
 
