@@ -17,4 +17,13 @@ class FollowViewModel: ViewModel() {
             callback(it)
         }
     }
+
+    //akan return true kalau sudah di follow
+    //akan return false kalau blm di follow
+    //buat bikin follow button dynamic
+    fun checkFollowed(currUserID: String, targetUserID: String, callback: (Boolean) -> Unit) {
+        followRepo.checkFollowed(currUserID, targetUserID) {
+            callback(it)
+        }
+    }
 }

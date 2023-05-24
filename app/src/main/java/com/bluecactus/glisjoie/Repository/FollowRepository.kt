@@ -10,7 +10,6 @@ class FollowRepository {
     val usersRef = db.collection("users")
 
     fun addFollowing(currUserID: String, targetUserID: String, callback: (Int) -> Unit) {
-
         val following = hashMapOf(
             "userID" to targetUserID
         )
@@ -83,6 +82,28 @@ class FollowRepository {
 
             }
 
+    }
+
+    //return true kalau sudah di follow,
+    //return false kalau blm di follow
+    fun checkFollowed(currUserID: String, targetUserID: String, callback: (Boolean) -> Unit) {
+        usersRef
+            .document(currUserID)
+            .collection("following")
+            .whereEqualTo("userID", targetUserID)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val docExist = !querySnapshot.isEmpty
+                if (docExist) {
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
+            .addOnFailureListener{
+                callback(false)
+            }
     }
 
 }
