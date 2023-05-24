@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +21,7 @@ class ProfileBookFragment : Fragment() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: BookPreviewAdapter
-    lateinit var homeViewModel: HomeViewModel;
+    lateinit var homeViewModel: HomeViewModel
     lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
