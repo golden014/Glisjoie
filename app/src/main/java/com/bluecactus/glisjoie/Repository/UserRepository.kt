@@ -2,6 +2,8 @@ package com.bluecactus.glisjoie.Repository
 
 import android.util.Log
 import com.bluecactus.glisjoie.Model.UserModel
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.firestore
@@ -139,7 +141,61 @@ class UserRepository {
                     callback(users.toTypedArray())
                 }
             }
+    }
+
+    //update email
+    fun updateEmail(newEmail: String, callback: (Int) -> Unit) {
+        //cek email unique atau engga
+        emailIsUnique(newEmail) { unique ->
+            if (unique) {
+                val user = FirebaseAuth.getInstance().currentUser
+                user?.updateEmail(newEmail)
+                    ?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            callback(200)
+                        } else {
+                            callback(500)
+                        }
+                    }
+                    ?.addOnFailureListener{
+                        Log.e("updateEmail", "server error")
+                        Log.e("UpdateEmail", it.message.toString())
+                        callback(500)
+                    }
+            } else {
+                callback(400)
+            }
+        }
 
 
     }
+
+    //update password
+    fun updatePassword(currPass: String,newPassword: String, callback: (Int) -> Unit) {
+        val user = FirebaseAuth.getInstance().currentUser
+
+        // Create credentials using the user's email and current password
+        val credentials = EmailAuthProvider.getCredential(user?.email ?: "", currPass)
+
+        user?.reauthenticate(credentials)?.addOnCompleteListener { reauthTask ->
+            if (reauthTask.isSuccessful) {
+                user.updatePassword(newPassword)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            callback(200)
+                        } else {
+                            callback(500)
+                        }
+                    }
+                    .addOnFailureListener{
+                        Log.e("updateEmail", "server error")
+                        Log.e("UpdateEmail", it.message.toString())
+                    }
+            }
+        }
+
+
+    }
+
+
 }
