@@ -98,5 +98,12 @@ class ViewHistoryViewModel : ViewModel() {
         }
     }
 
+    //ambil total history dari user
+    fun getTotalHistory(userID: String, callback: (Int) -> Unit) {
+        viewHistoryRepository.getTotalHistory(userID) {
+            callback(it)
+        }
+    }
+
 
 }

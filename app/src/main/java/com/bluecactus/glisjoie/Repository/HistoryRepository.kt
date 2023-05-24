@@ -220,4 +220,25 @@ class HistoryRepository {
         }
     }
 
+    fun getTotalHistory(userID: String, callback: (Int) -> Unit) {
+        val booksHistory = mutableListOf<ViewHistoryModel>()
+
+        val viewHistoryRef =
+            db.collection("users")
+                .document(userID)
+                .collection("viewHistory")
+
+        viewHistoryRef
+            .get()
+            .addOnSuccessListener {
+                val totalDocs = it.size()
+                callback(totalDocs)
+            }
+            .addOnFailureListener {
+                callback(0)
+            }
+
+
+    }
+
 }

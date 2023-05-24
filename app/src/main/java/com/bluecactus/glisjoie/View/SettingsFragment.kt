@@ -18,6 +18,7 @@ class SettingsFragment : Fragment() {
     lateinit var adminSettingsLayout: RelativeLayout
     lateinit var credentialSettingsLayout: RelativeLayout
     lateinit var logoutButton: RelativeLayout
+    lateinit var viewHistoryLayout: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class SettingsFragment : Fragment() {
 
         adminSettingsLayout = view.findViewById(R.id.admin_setting_layout)
         credentialSettingsLayout = view.findViewById(R.id.credential_setting_layout)
+        viewHistoryLayout = view.findViewById(R.id.view_history_setting_button)
         logoutButton = view.findViewById(R.id.logout_setting)
 
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
@@ -56,11 +58,18 @@ class SettingsFragment : Fragment() {
             //TODO: direct ke credential setting
         }
 
+        viewHistoryLayout.setOnClickListener{
+            val intent = Intent(requireActivity(), ViewHistoryActivity::class.java)
+            startActivity(intent)
+        }
+
         logoutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }
+
+
 
 
     }
