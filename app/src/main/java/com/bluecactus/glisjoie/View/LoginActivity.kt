@@ -1,12 +1,17 @@
 package com.bluecactus.glisjoie.View
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.ViewModel.LoginViewModel
@@ -47,11 +52,14 @@ class LoginActivity : AppCompatActivity() {
                             userViewModel.updateCurrUser(result)
                             userViewModel.currUser.observe(this) { user ->
                                 error_text.text = user?.userDocumentID ?: "No user"
+                                triggerNotification()
                                 val intent = Intent(this, HomeActivity::class.java)
                                 startActivity(intent)
                             }
                         }
                         error_text.text = userViewModel.currUser.value?.userDocumentID ?: "asdasdad"
+
+
 
                     } else {
                         error_text.text = "Wrong credential"
@@ -69,7 +77,46 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    private fun triggerNotification() {
+//        val context = this
 
+//        context?.let {
+            // Create a notification channel for Android Oreo and later
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val name = "Login Success !"
+                val description = "Enjoy our app !"
+                val importance = NotificationManager.IMPORTANCE_DEFAULT
+                val channel = NotificationChannel("notifyId", name, importance).apply {
+                    this.description = description
+                }
+
+                // Register the channel with the system
+                val notificationManager = getSystemService(NotificationManager::class.java)
+                notificationManager?.createNotificationChannel(channel)
+//            }
+        Log.e("Notification", "Notification channel created") // Log after channel is created
+
+
+        // Create a notification
+            val builder = NotificationCompat.Builder(this, "notifyId")
+                .setSmallIcon(R.drawable.ic_baseline_menu_book_24) // Set the icon
+                .setContentTitle("Profile Update") // Set the title
+                .setContentText("Your profile updated!") // Set the text
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+            // Get the NotificationManager
+            val notificationManagerCompat = NotificationManagerCompat.from(this)
+
+            // Send the notification
+//            notificationManagerCompat.notify(1, builder.build())
+        try {
+            notificationManagerCompat.notify(1, builder.build())
+            Log.d("Notification", "Notification sent") // Log after notification is sent
+        } catch (e: Exception) {
+            Log.e("Notification", "Failed to send notification", e) // Log if an exception is thrown
+        }
+//        }
+    }
 
 
 }
