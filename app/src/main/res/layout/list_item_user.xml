@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/user_image_admin_page"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        />
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="10dp">
+
+        <TextView
+            android:id="@+id/username_user_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="27dp"
+            android:fontFamily="@font/katibeh"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/email_user_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dummy@email.com"
+            android:fontFamily="@font/katibeh"
+            android:textSize="18dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ban_unban_button"
+        android:layout_width="85dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:backgroundTint="@color/light_gray"
+        android:text=""
+        android:textColor="@color/black"
+        android:padding="2dp"/>
+
+</LinearLayout>

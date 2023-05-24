@@ -1,5 +1,7 @@
 package com.bluecactus.glisjoie.ViewModel
 
+import android.app.AlertDialog
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,11 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
+import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.Model.ViewHistoryModel
 import com.bluecactus.glisjoie.R
 import com.squareup.picasso.Callback
@@ -19,8 +25,12 @@ import java.lang.Exception
 
 class ViewHistoryAdapter(
     private  val resource: Int,
-    private var objects: List<ViewHistoryModel>
+    private var objects: List<ViewHistoryModel>,
+    private val app: AppCompatActivity,
+//    private val context: Context,
+
 ): RecyclerView.Adapter<ViewHistoryAdapter.ViewHolder>() {
+
 
     public class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var bookImage: ImageView = itemView.findViewById(R.id.book_image_history)
@@ -38,7 +48,7 @@ class ViewHistoryAdapter(
 
     fun clearData() {
         this.objects = emptyList()
-//        notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -63,13 +73,56 @@ class ViewHistoryAdapter(
             })
 
         holder.bookTitle.text = bookHistory.title
-//        holder.authorName.text = bookHistory.authorName
         holder.date.text = bookHistory.date
 
         holder.deleteButton.setOnClickListener {
+
+            AlertDialog
+                .Builder(app)
+                .setMessage("Are you sure you want to delete this book history ?")
+                .setPositiveButton("Yes") {dialog, _ ->
+                    dialog.dismiss()
+                    val historyViewModel = ViewModelProvider(app).get(ViewHistoryViewModel::class.java)
+                    val userViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
+
+                    userViewModel.getCurrUser { it ->
+                        historyViewModel.deleteSingleViewHistory(it.userDocumentID, bookHistory.documentID) { result ->
+                            if (result == 200) {
+                                AlertDialog
+                                    .Builder(app)
+                                    .setMessage("Delete success !")
+                                    .show()
+
+                                historyViewModel.getViewHistory(it.userDocumentID) { it ->
+                                    updateData(it.toList())
+                                }
+                            }
+                        }
+
+                    }
+                }
+                .setNegativeButton("Cancel") {dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
             // TODO: tambahin soft delete per item, update status holder
 
+
         }
+
+    }
+
+    fun reloadData() {
+        val historyViewModel = ViewModelProvider(app).get(ViewHistoryViewModel::class.java)
+        val userViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
+
+        userViewModel.getCurrUser {
+            historyViewModel.getViewHistory(it.userDocumentID) { newData ->
+                updateData(newData.toList())
+            }
+        }
+
+
 
     }
 

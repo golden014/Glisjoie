@@ -1,5 +1,6 @@
 package com.bluecactus.glisjoie.ViewModel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.bluecactus.glisjoie.Model.ViewHistoryModel
@@ -49,6 +50,51 @@ class ViewHistoryViewModel : ViewModel() {
 
         return objects.sortedByDescending { obj ->
             LocalDate.parse(obj.date, formatter)
+        }
+    }
+
+    //search
+    fun searchViewHistory(userID: String, subString: String,callback: (Array<ViewHistoryModel>) -> Unit) {
+        viewHistoryRepository.searchViewHistory(userID, subString) { historyArray ->
+            if (historyArray.isNotEmpty()) {
+                callback(sortObjectsByDate(historyArray).toTypedArray())
+            } else {
+                callback(emptyArray())
+            }
+
+        }
+    }
+
+    fun deleteSingleViewHistory(userID: String, viewHistoryID: String, callback: (Int) -> Unit) {
+        viewHistoryRepository.deleteSingleViewHistory(userID, viewHistoryID) {
+            callback(it)
+        }
+    }
+
+    //delete filtered
+    fun deleteFiltered(userID: String, day: Int,callback: (Int) -> Unit) {
+        //ambil semua
+        viewHistoryRepository.getAllViewHistory(userID) { historyArray ->
+
+            //filter by date, return array
+            var filtered = filterRecentDates(day, historyArray)
+
+            //extract docID dari array of objects
+            var extractedFields: MutableList<String> = arrayListOf()
+
+            for (obj in filtered) {
+                extractedFields.add(obj.documentID)
+            }
+            //delete semua document yg match dgn isi array (docsID)
+            viewHistoryRepository.deleteFiltered(userID, extractedFields.toTypedArray()) {
+                callback(it)
+            }
+        }
+    }
+
+    fun deleteAllHistory(userID: String, callback: (Int) -> Unit) {
+        viewHistoryRepository.deleteAllHistory(userID) {
+            callback(it)
         }
     }
 

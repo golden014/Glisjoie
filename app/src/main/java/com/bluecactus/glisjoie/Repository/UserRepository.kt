@@ -78,4 +78,68 @@ class UserRepository {
             }
     }
 
+    //get all customer
+    fun getAllCustomer(callback: (Array<UserModel>) -> Unit) {
+        var users = mutableListOf<UserModel>()
+
+        usersCollection
+            .whereEqualTo("role", "Customer")
+            .get()
+            .addOnSuccessListener { querySnapshot->
+                for (doc in querySnapshot.documents) {
+                    users.add(UserModel(
+                        doc.id,
+                        doc.getString("email") as String,
+                        doc.getString("username") as String,
+                        doc.getString("status") as String,
+                        doc.getString("role") as String,
+                        doc.getString("profilePictureURL") as String
+                    ))
+                    Log.e("admin", doc.getString("profilePictureURL") as String)
+
+                    callback(users.toTypedArray())
+                }
+            }
+    }
+
+    //search customer
+    fun searchCustomer(name: String, callback: (Array<UserModel>) -> Unit) {
+        var filtered = mutableListOf<UserModel>()
+        getAllCustomer() { users ->
+            for (obj in users) {
+                if (obj.username.contains(name)) {
+                    filtered.add(obj)
+                }
+            }
+
+            callback(filtered.toTypedArray())
+        }
+    }
+
+    //filter by status
+    fun filterStatusUser(status: String, callback: (Array<UserModel>) -> Unit) {
+        var users = mutableListOf<UserModel>()
+
+        usersCollection
+            .whereEqualTo("role", "Customer")
+            .whereEqualTo("status", status)
+            .get()
+            .addOnSuccessListener { querySnapshot->
+                for (doc in querySnapshot.documents) {
+                    users.add(UserModel(
+                        doc.id,
+                        doc.getString("email") as String,
+                        doc.getString("username") as String,
+                        doc.getString("status") as String,
+                        doc.getString("role") as String,
+                        doc.getString("profilePictureURL") as String
+                    ))
+                    Log.e("admin", doc.getString("profilePictureURL") as String)
+
+                    callback(users.toTypedArray())
+                }
+            }
+
+
+    }
 }
