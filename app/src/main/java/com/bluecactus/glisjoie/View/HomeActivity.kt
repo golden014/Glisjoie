@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bluecactus.glisjoie.Model.BookPreviewModel
 import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.View.books.CreateBookFragment
+import com.bluecactus.glisjoie.View.profile.ProfileActivity
 import com.bluecactus.glisjoie.ViewModel.BookPreviewAdapter
 import com.bluecactus.glisjoie.ViewModel.HomeViewModel
 import com.bluecactus.glisjoie.ViewModel.SearchViewModel
@@ -114,7 +115,7 @@ class HomeActivity:AppCompatActivity() {
                     }
                     R.id.profile_nav -> {
 //                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, viewHistoryFragment).commit()
-                        val intent = Intent(this@HomeActivity, ViewHistoryActivity::class.java)
+                        val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
                         startActivity(intent)
                         return true
                     }
