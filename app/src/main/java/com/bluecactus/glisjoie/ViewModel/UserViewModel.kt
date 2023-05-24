@@ -30,4 +30,22 @@ class UserViewModel: ViewModel() {
             callback(user)
         }
     }
+
+    fun updateEmail(newEmail: String, callback: (Int) -> Unit) {
+        userRepo.updateEmail(newEmail) {
+            callback(it)
+        }
+    }
+
+    fun updatePassword(currPassword: String, newPassword: String, confNewPassword: String,callback: (Int) -> Unit) {
+        if (newPassword != confNewPassword) {
+            callback(400)
+        } else {
+            userRepo.updatePassword(currPassword, newPassword) {
+                callback(it)
+            }
+        }
+
+    }
+
 }

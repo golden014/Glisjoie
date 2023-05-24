@@ -21,6 +21,13 @@
         android:theme="@style/Theme.Glisjoie"
         tools:targetApi="31" >
         <activity
+            android:name=".View.CredentialSettingsActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".View.profile.ProfileActivity"
             android:exported="false" />
         <activity

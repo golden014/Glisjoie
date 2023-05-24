@@ -55,7 +55,8 @@ class SettingsFragment : Fragment() {
         }
 
         credentialSettingsLayout.setOnClickListener{
-            //TODO: direct ke credential setting
+            val intent = Intent(requireActivity(), CredentialSettingsActivity::class.java)
+            startActivity(intent)
         }
 
         viewHistoryLayout.setOnClickListener{
