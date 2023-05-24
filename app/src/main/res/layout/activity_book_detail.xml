@@ -33,6 +33,12 @@
                 android:scaleType="centerCrop"
                 tools:srcCompat="@tools:sample/avatars" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/bookTitle"
                 android:layout_width="370dp"

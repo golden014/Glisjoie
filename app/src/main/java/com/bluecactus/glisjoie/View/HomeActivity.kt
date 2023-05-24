@@ -20,7 +20,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bluecactus.glisjoie.Model.BookPreviewModel
+import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.Repository.UserRepository
 import com.bluecactus.glisjoie.View.books.CreateBookFragment
 import com.bluecactus.glisjoie.View.profile.ProfileActivity
 import com.bluecactus.glisjoie.ViewModel.BookPreviewAdapter
@@ -52,6 +54,7 @@ class HomeActivity:AppCompatActivity() {
     val profileFragment: ProfileFragment = ProfileFragment()
     val settingsFragment: SettingsFragment = SettingsFragment()
     val viewHistoryFragment: ViewHistoryFragment = ViewHistoryFragment()
+    lateinit var currentUser: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +64,10 @@ class HomeActivity:AppCompatActivity() {
         botNavView = findViewById(R.id.bottom_nav)
 
         val auth = Firebase.auth
+
+        UserRepository().getCurrUser { user ->
+            currentUser = user
+        }
 
         //push user ke login kalau blm login
         if (auth.currentUser == null) {
@@ -121,7 +128,7 @@ class HomeActivity:AppCompatActivity() {
                     }
                     R.id.profile_nav -> {
 //                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, viewHistoryFragment).commit()
-                        val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+                        val intent = Intent(this@HomeActivity, ProfileActivity::class.java).putExtra("userId", currentUser.userDocumentID)
                         startActivity(intent)
                         return true
                     }

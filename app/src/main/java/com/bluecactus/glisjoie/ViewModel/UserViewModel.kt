@@ -31,6 +31,12 @@ class UserViewModel: ViewModel() {
         }
     }
 
+    fun getUserByID(userID: String, callback: (UserModel) -> Unit) {
+        userRepo.getUserByID(userID) { user->
+            callback(user!!)
+        }
+    }
+
     fun updateEmail(newEmail: String, callback: (Int) -> Unit) {
         userRepo.updateEmail(newEmail) {
             callback(it)

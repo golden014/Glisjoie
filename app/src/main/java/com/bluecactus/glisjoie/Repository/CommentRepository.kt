@@ -54,44 +54,20 @@ class CommentRepository {
                     db.collection("books").document(books.id).collection("comment").whereEqualTo("userID", UserID).get()
                         .addOnSuccessListener{ docs ->
                             for (doc in docs.documents){
-                                val comment = CommentModel(doc.getString("userID"),
-                                    doc.getString("bookID"),
-                                    doc.getDate("date"),
-                                    doc.getDouble("rating")!!.toFloat(),
-                                    doc.getString("description"));
-                                Log.d("COLLECTIONOFBOOKS", "getCommentByUserID: ${comment.description}")
-                                arrs.add(comment);
+                                if(doc.getString("userID").equals(UserID)){
+                                    val comment = CommentModel(doc.getString("userID"),
+                                        doc.getString("bookID"),
+                                        doc.getDate("date"),
+                                        doc.getDouble("rating")!!.toFloat(),
+                                        doc.getString("description"));
+                                    Log.d("COLLECTIONOFBOOKS", "getCommentByUserID: ${comment.description}")
+                                    arrs.add(comment);
+                                }
                             }
                             callback(arrs)
                         }
                 }
             }
 
-    }
-
-    fun getCommentByUserID(user:UserModel, callback: (ArrayList<CommentModel>) -> Unit?) {
-        db.collection("books")
-            .get()
-            .addOnSuccessListener { bookQuery ->
-                for (book in bookQuery) {
-                    val commentsCollection = book.reference.collection("comment")
-                    commentsCollection.whereEqualTo("userID", user.userDocumentID)
-                        .get()
-                        .addOnSuccessListener { commentQuery ->
-                            for (comment in commentQuery) {
-                                val commentsList = ArrayList<CommentModel>()
-                                for (document in commentQuery) {
-                                    val comment = CommentModel(document.getString("userID"),
-                                        document.getString("bookID"),
-                                        document.getDate("date"),
-                                        document.getDouble("rating")!!.toFloat(),
-                                        document.getString("description"));
-                                    commentsList.add(comment);
-                                }
-                                callback(commentsList)
-                            }
-                        }
-                }
-            }
     }
 }

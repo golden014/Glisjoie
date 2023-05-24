@@ -1,6 +1,7 @@
 package com.bluecactus.glisjoie.View.books
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -19,6 +20,7 @@ import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.Repository.BookRepository
 import com.bluecactus.glisjoie.Repository.CommentRepository
+import com.bluecactus.glisjoie.View.profile.ProfileActivity
 import com.bluecactus.glisjoie.ViewModel.*
 import de.hdodenhof.circleimageview.CircleImageView
 import org.w3c.dom.Text
@@ -86,18 +88,15 @@ class BookDetailActivity : AppCompatActivity() {
             adapter.updateData(arr)
         };
 
+        var authorId = intent.getStringExtra("authorID")
         userViewModel.getCurrUser() { it ->
             currUser = it
-            var authorId = intent.getStringExtra("authorID")
 
             viewHistoryViewModel.updateHistory(currUser.userDocumentID, bookId as String)
 
             if (currUser.userDocumentID == authorId) {
                 Log.e("bookDetail1", "authorIDIntent: " + authorId)
                 Log.e("bookDetail1", "authorID: " + currUser.userDocumentID)
-        //        TODO: IMPORTANT!! masukin intent filter ke edit books activity
-                //atau mau buat satu icon edit gtu yg bakalan visible kalau dia adalah author yg redirect ke
-                //edit books activity
 
             } else {
                 Log.e("bookDetail1", "bukan punya curr user")
@@ -154,7 +153,17 @@ class BookDetailActivity : AppCompatActivity() {
         }
 
         //TODO: IMPORTANT!! replace this with the bookId provided
+
+//        userViewModel.getCurrUser {currUs->
+            bookAuthor.setOnClickListener{ it ->
+                Log.d("GETADAW", "onCreate: ${authorId}")
+                val intent = Intent(this, ProfileActivity::class.java).putExtra("userId", authorId)
+                startActivity(intent)
+//            }
+        }
         bookViewModel.getBookByID(bookId)
+
+
 
     }
 

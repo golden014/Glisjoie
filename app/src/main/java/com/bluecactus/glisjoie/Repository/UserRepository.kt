@@ -118,6 +118,26 @@ class UserRepository {
         }
     }
 
+    fun getUserByID(userID: String, callback: (UserModel?) -> Unit) {
+        db.collection("users").document(userID).get().addOnSuccessListener { user ->
+            val curUser = if (user != null && user.exists()) {
+                user.getString("email")?.let {
+                    UserModel(
+                        user.id,
+                        it,
+                        user.getString("username")!!,
+                        user.getString("status")!!,
+                        user.getString("role")!!,
+                        user.getString("profilePictureURL")!!
+                    )
+                }
+            } else {
+                null
+            }
+            callback(curUser)
+        }
+    }
+
     //filter by status
     fun filterStatusUser(status: String, callback: (Array<UserModel>) -> Unit) {
         var users = mutableListOf<UserModel>()
