@@ -3,6 +3,7 @@ package com.bluecactus.glisjoie.Repository
 import android.util.Log
 import com.bluecactus.glisjoie.Model.BookModel
 import com.bluecactus.glisjoie.Model.BookPreviewModel
+import com.bluecactus.glisjoie.Model.CommentModel
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -77,7 +78,6 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
         Log.e("searchdebug", "performsearch start, keyword: $keyword")
         val books = mutableListOf<BookPreviewModel>()
 
-
         db.collection("books").whereGreaterThanOrEqualTo("bookTitle", keyword)
             .whereLessThan("bookTitle", keyword + "z")
             .get()
@@ -135,13 +135,14 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
             Log.e("BookRepository", "getBookByID: bookID is null")
             return
         }
+
         db!!.collection("books").document(bookID).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val book = task.result
                 if (book != null && book.exists()) {
                     val bookTitle = book.getString("bookTitle").toString()
                     val imageLink = book.getString("imageLink").toString()
-                    val rating = book.getDouble("rating")?.toFloat()!!
+                    var rating = book.getDouble("rating")?.toFloat()!!
                     val description = book.getString("description").toString()
                     val date = book.getDate("date")
                     val userID = book.getString("userID")!!
@@ -168,6 +169,36 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
                 println("Error getting book details: ${task.exception}")
                 callback(null)
             }
+        }
+    }
+
+    fun getCommentsAndRatingForBook(bookID: String, callback: (commentCount: Int, averageRating: Float) -> Unit) {
+
+        Log.d("COMMENTS AND RATING BookID", "BookID: $bookID")
+
+        var average = 0f;
+        var count = 0;
+        var sum = 0f;
+
+        CommentRepository().getCommentByBookID(BookModel("",
+            "",
+            bookID,
+            "",
+            "",
+            "",
+            null,
+            null,
+            null,
+            null,
+            "")){ resCall ->
+            count = resCall.size;
+            for(i in 0 until resCall.size){
+                sum += resCall.get(i).rating!!
+                Log.d("COMMENTS AND RATING", "getCommentsAndRatingForBook: $i, $sum")
+            };
+            average = sum / count;
+
+            callback(count, average)
         }
     }
 }

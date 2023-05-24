@@ -25,7 +25,7 @@ class CommentRepository {
     }
 
     fun getCommentByBookID(Book:BookModel, callback: (ArrayList<CommentModel>) -> Unit) {
-
+        Log.d("JEVON912", "getCommentByBookID: ${Book.bookID}")
         db.collection("books")
             .document(Book.bookID!!)
             .collection("comment")

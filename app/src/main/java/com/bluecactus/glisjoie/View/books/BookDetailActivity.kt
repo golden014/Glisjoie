@@ -21,6 +21,7 @@ import com.bluecactus.glisjoie.Repository.BookRepository
 import com.bluecactus.glisjoie.Repository.CommentRepository
 import com.bluecactus.glisjoie.ViewModel.*
 import de.hdodenhof.circleimageview.CircleImageView
+import org.w3c.dom.Text
 import kotlin.math.log
 
 class BookDetailActivity : AppCompatActivity() {
@@ -48,6 +49,7 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var commentViewModel: CommentViewModel
     private lateinit var viewHistoryViewModel: ViewHistoryViewModel
     private lateinit var bookCommentRating: RatingBar
+    private lateinit var bookReviewCount : TextView
 
     //Data
     private var arr : ArrayList<CommentModel> = ArrayList<CommentModel>();
@@ -76,9 +78,7 @@ class BookDetailActivity : AppCompatActivity() {
                 null,
                 null,
                 "")){ resCall ->
-            for(i in 0 until resCall.size){
-                Log.d("ASDWAWDD", "onCreate: "+ resCall.get(i).description)
-            }
+            for(i in 0 until resCall.size){ Log.d("GOLDWASSER", "onCreate: "+ resCall.get(i).description) }
             arr = resCall
             adapter = CommentAdapter(R.layout.item_comment, mutableListOf());
             recyclerView.layoutManager = LinearLayoutManager(this@BookDetailActivity)
@@ -112,6 +112,7 @@ class BookDetailActivity : AppCompatActivity() {
         bookAuthor = findViewById(R.id.bookAuthor)
         bookRating = findViewById(R.id.ratingBar)
         bookDescription = findViewById(R.id.bookDescription)
+        bookReviewCount = findViewById(R.id.reviewCount)
         bookRating.setIsIndicator(true)
 
         bookCommentField = findViewById(R.id.detailCommentContent)
@@ -140,11 +141,13 @@ class BookDetailActivity : AppCompatActivity() {
             commentViewModel.validateComment(bookCommentField.text.toString(), bookCommentRating.rating, currUser, bookViewModel.bookData.value!!)
         };
 
+//      var bookId = intent.getStringExtra("bookID")
+//      TODO: IMPORTANT!! uncomment when receiving put extra
+//      bookId = intent.getStringExtra("KEYNAME")
 
-
-//        var bookId = intent.getStringExtra("bookID")
-//        TODO: IMPORTANT!! uncomment when receiving put extra
-        //bookId = intent.getStringExtra("KEYNAME")
+        bookViewModel.countData.observe(this){
+            bookReviewCount.text = bookViewModel.countData.value.toString() + " Reviews"
+        }
 
         bookViewModel.bookData.observe(this) {
             bookViewModel.updateData(bookCover, bookTitle, bookAuthor, bookRating, bookDescription)

@@ -21,12 +21,19 @@ class BookViewModel : ViewModel() {
     private lateinit var book: BookModel
     var response: MutableLiveData<String> = MutableLiveData<String>("")
     var bookData: MutableLiveData<BookModel> = MutableLiveData<BookModel>(null)
+    var countData: MutableLiveData<Int> = MutableLiveData<Int>(0)
     fun getBookByID(bookID: String?) {
         val bookRepo = BookRepository()
         return bookRepo.getBookByID(bookID) { bookModel ->
             if (bookModel != null) {
-                bookData.value = bookModel
-                Log.d("HAPPY", bookData.value!!.bookTitle)
+                Log.d("JEVCON", "getBookByID: $bookID")
+                BookRepository().getCommentsAndRatingForBook(bookID!!){ sum, average ->
+                    Log.d("JEVCON12312", "getBookByID: $sum $average")
+                    bookModel.rating = average
+                    bookData.value = bookModel
+                    countData.value = sum
+                    Log.d("HAPPY", bookData.value!!.bookTitle)
+                }
             } else {
                 println("Error retrieving book details.")
             }

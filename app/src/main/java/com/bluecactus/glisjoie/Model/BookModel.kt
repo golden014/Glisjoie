@@ -81,6 +81,8 @@ class BookModel(
             }
     }
 
+    
+
 
     fun createNewBook(newProduct: BookModel, callback: (String?) -> Unit) {
         if (newProduct.userID == null) {
