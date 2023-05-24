@@ -172,6 +172,53 @@ class BookRepository: com.bluecactus.glisjoie.Model.BookRepository {
         }
     }
 
+    fun getPreviewModelByUser(userID : String, callback: (Array<BookPreviewModel>) -> Unit) {
+        val books = mutableListOf<BookPreviewModel>()
+        db.collection("books")
+            .whereEqualTo("userID", userID)
+            .get()
+            .addOnCompleteListener() { booksResult ->
+                // Iterate over the books and retrieve the author's name from the "users" collection
+//                bookTasks =
+                for (bookDoc in booksResult.result.documents) {
+                    val userID = bookDoc.getString("userID")
+                    if (userID != null) {
+                        db.collection("users").document(userID).get()
+                            .addOnCompleteListener() { user ->
+                                user.result.getString("username")?.let {
+                                    bookDoc.getString("bookTitle")?.let { it1->
+                                        bookDoc.getString("imageLink")?.let { it2 ->
+                                            bookDoc.get("rating")?.let { it3 ->
+                                                bookDoc.getString("userID")?.let { it4 ->
+                                                    BookPreviewModel(
+                                                        it1,
+                                                        it,
+                                                        it2,
+                                                        bookDoc.id,
+                                                        (it3 as Number).toDouble(),
+                                                        it4
+                                                    )
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+                                }?.let {
+                                    Log.e("added",
+                                        user.result.getString("username")!!
+                                    )
+                                    books.add(
+                                        it
+                                    )
+                                }
+                                callback(books.toTypedArray())
+                            }
+                    }
+                }
+            }
+    }
+
     fun getCommentsAndRatingForBook(bookID: String, callback: (commentCount: Int, averageRating: Float) -> Unit) {
 
         Log.d("COMMENTS AND RATING BookID", "BookID: $bookID")
