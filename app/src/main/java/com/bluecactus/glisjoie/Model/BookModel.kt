@@ -148,5 +148,18 @@ class BookModel(
             }
     }
 
+    private fun deleteBookByID(bookID: String, callback: (Int) -> Unit) {
+        val db = Firebase.firestore
+        db.collection("books")
+            .document(bookID)
+            .delete()
+            .addOnSuccessListener {
+                callback(200)
+            }
+            .addOnFailureListener{
+                callback(500)
+            }
+    }
+
 }
 
