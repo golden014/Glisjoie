@@ -17,7 +17,6 @@ class CommentViewModel : ViewModel(){
     var response: MutableLiveData<String> = MutableLiveData<String>("")
 
     fun validateComment(comment : String, rating : Float, user : UserModel, book : BookModel){
-        response = MutableLiveData<String>();
         var message = ""
         var currRating = rating
         if(comment.isBlank()){
@@ -26,6 +25,8 @@ class CommentViewModel : ViewModel(){
         if(currRating == null){
             currRating = 0f
         }
+
+        Log.d("A", "validateComment: " + message)
         if(message.isBlank()){
             CommentRepository().createCommentRepository(CommentModel(user.userDocumentID, book.bookID, Date(), rating, comment)){str ->
                 response.value = str

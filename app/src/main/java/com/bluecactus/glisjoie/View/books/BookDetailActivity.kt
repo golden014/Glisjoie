@@ -119,25 +119,28 @@ class BookDetailActivity : AppCompatActivity() {
         bookCommentIcon = findViewById(R.id.detailCommentPicture)
         bookCommentButton = findViewById(R.id.bookDetailCommentBtn)
 
-        bookCommentButton.setOnClickListener {
-            commentViewModel.validateComment(bookCommentField.text.toString(), bookCommentRating.rating, currUser, bookViewModel.bookData.value!!)
-        };
-
         commentViewModel.response.observe(this) { message ->
-            if(message != ""){
+            Log.d("TESTSADAW", "onCreate:" )
+            if(message != null && message != ""){
+                Log.d("BookDetailActivity", "onCreate: $message")
                 AlertDialog.Builder(this)
                     .setMessage(message)
                     .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
-                        if(message.equals("Comment posted")){ if(message == "Success Upload"){
-                            finish();
-                            startActivity(getIntent());
-                        }
-                        }
+                            if(message == "Success Comment"){
+                                finish();
+                                startActivity(getIntent());
+                            }
                     })
                     .create()
                     .show()
             }
         }
+
+        bookCommentButton.setOnClickListener {
+            commentViewModel.validateComment(bookCommentField.text.toString(), bookCommentRating.rating, currUser, bookViewModel.bookData.value!!)
+        };
+
+
 
 //        var bookId = intent.getStringExtra("bookID")
 //        TODO: IMPORTANT!! uncomment when receiving put extra

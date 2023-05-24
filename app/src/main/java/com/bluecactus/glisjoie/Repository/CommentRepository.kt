@@ -14,14 +14,14 @@ class CommentRepository {
     val db = Firebase.firestore;
 
     fun createCommentRepository(comment:CommentModel, callback: (String) -> Unit){
-//        var a = CommentModel("2qaX8ruzVaZyi8SLZOOS", "8jmeFAsRMDQsCDJ90gYu", Date(), 3f, "Test");
+        //var a = CommentModel("2qaX8ruzVaZyi8SLZOOS", "8jmeFAsRMDQsCDJ90gYu", Date(), 3f, "Test");
         Log.wtf("CommentRepository", "Uploading...")
         val commentDoc =
             db.collection("books")
                 .document(comment.bookID!!)
                 .collection("comment")
                 .add(comment)
-        callback("Success Upload")
+        callback("Success Comment")
     }
 
     fun getCommentByBookID(Book:BookModel, callback: (ArrayList<CommentModel>) -> Unit) {
@@ -45,7 +45,6 @@ class CommentRepository {
     }
 
     fun getCommentByUserID(user:UserModel, callback: (ArrayList<CommentModel>) -> Unit?) {
-
         db.collection("books")
             .get()
             .addOnSuccessListener { bookQuery ->
