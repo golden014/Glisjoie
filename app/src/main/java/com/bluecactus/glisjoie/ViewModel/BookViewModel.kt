@@ -71,9 +71,6 @@ class BookViewModel : ViewModel() {
                 response.value = message
             }
         }
-
-
-
     }
 
     private fun validateDescription(bookDescription: String) {

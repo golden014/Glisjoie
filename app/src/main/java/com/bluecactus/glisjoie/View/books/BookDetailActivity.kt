@@ -1,5 +1,6 @@
 package com.bluecactus.glisjoie.View.books
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -7,6 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import com.bluecactus.glisjoie.Model.BookModel
 import com.bluecactus.glisjoie.Model.CommentModel
 import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.Repository.BookRepository
 import com.bluecactus.glisjoie.Repository.CommentRepository
 import com.bluecactus.glisjoie.ViewModel.*
 import de.hdodenhof.circleimageview.CircleImageView
@@ -42,7 +45,9 @@ class BookDetailActivity : AppCompatActivity() {
     //view models
     private lateinit var bookViewModel: BookViewModel
     private lateinit var userViewModel: UserViewModel
+    private lateinit var commentViewModel: CommentViewModel
     private lateinit var viewHistoryViewModel: ViewHistoryViewModel
+    private lateinit var bookCommentRating: RatingBar
 
     //Data
     private var arr : ArrayList<CommentModel> = ArrayList<CommentModel>();
@@ -55,13 +60,14 @@ class BookDetailActivity : AppCompatActivity() {
         var bookId = intent.getStringExtra("bookID")
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         bookViewModel = ViewModelProvider(this).get(BookViewModel::class.java)
+        commentViewModel = ViewModelProvider(this).get(CommentViewModel::class.java)
         viewHistoryViewModel = ViewModelProvider(this).get(ViewHistoryViewModel::class.java)
 
         recyclerView = findViewById(R.id.detailCommentRecyclerView)
         CommentRepository().getCommentByBookID(
             BookModel("",
             "",
-            "8jmeFAsRMDQsCDJ90gYu",
+                bookId,
             "",
             "",
             "",
@@ -107,6 +113,31 @@ class BookDetailActivity : AppCompatActivity() {
         bookRating = findViewById(R.id.ratingBar)
         bookDescription = findViewById(R.id.bookDescription)
         bookRating.setIsIndicator(true)
+
+        bookCommentField = findViewById(R.id.detailCommentContent)
+        bookCommentRating = findViewById(R.id.detailCommentRating)
+        bookCommentIcon = findViewById(R.id.detailCommentPicture)
+        bookCommentButton = findViewById(R.id.bookDetailCommentBtn)
+
+        bookCommentButton.setOnClickListener {
+            commentViewModel.validateComment(bookCommentField.text.toString(), bookCommentRating.rating, currUser, bookViewModel.bookData.value!!)
+        };
+
+        commentViewModel.response.observe(this) { message ->
+            if(message != ""){
+                AlertDialog.Builder(this)
+                    .setMessage(message)
+                    .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                        if(message.equals("Comment posted")){ if(message == "Success Upload"){
+                            finish();
+                            startActivity(getIntent());
+                        }
+                        }
+                    })
+                    .create()
+                    .show()
+            }
+        }
 
 //        var bookId = intent.getStringExtra("bookID")
 //        TODO: IMPORTANT!! uncomment when receiving put extra

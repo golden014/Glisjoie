@@ -60,6 +60,7 @@ class CommentAdapter(private val id : Int, private var comments: List<CommentMod
                 }
             })
         holder.commentRating?.rating = comment.rating!!;
+        holder.commentRating?.setIsIndicator(true)
         holder.commentContent?.text = comment.description;
     }
 

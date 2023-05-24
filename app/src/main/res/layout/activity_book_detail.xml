@@ -7,20 +7,12 @@
     android:accessibilityLiveRegion="1"
     android:overScrollMode="ifContentScrolls">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/detailCommentRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
-
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:textAlignment="center">
 
             <ImageView
                 android:id="@+id/bookCover"
@@ -42,7 +35,7 @@
 
             <TextView
                 android:id="@+id/bookTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="370dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="20dp"
@@ -50,17 +43,19 @@
                 android:fontFamily="sans-serif-black"
                 android:gravity="top|left"
                 android:text="Book Title"
+                android:textAlignment="center"
                 android:textCursorDrawable="@null"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/bookAuthor"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="170dp"
-                android:text="author" />
+                android:text="author"
+                android:textAlignment="center" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -72,12 +67,13 @@
 
             <TextView
                 android:id="@+id/reviewCount"
-                android:layout_width="wrap_content"
+                android:layout_width="249dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="150dp"
-                android:text="(count) Reviews" />
+                android:text="(count) Reviews"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/bookDescription"
@@ -86,9 +82,49 @@
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="150dp"
+                android:gravity="center"
                 android:text="Book Description"
-                android:textAlignment="textStart"
+                android:textAlignment="gravity"
                 android:textCursorDrawable="@null" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/detailCommentPicture"
+                android:layout_width="87dp"
+                android:layout_height="86dp"
+                android:layout_marginTop="20dp"
+                android:src="@color/curr_auth_page_button"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp" />
+
+            <RatingBar
+                android:id="@+id/detailCommentRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp" />
+
+            <EditText
+                android:id="@+id/detailCommentContent"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:gravity="bottom"
+                android:hint="Comment"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/bookDetailCommentBtn"
+                android:layout_width="240dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="20dp"
+                android:text="Comment" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detailCommentRecyclerView"
+                android:layout_width="453dp"
+                android:layout_height="1284dp"
+                android:layout_marginTop="50dp" />
 
         </LinearLayout>
     </ScrollView>
