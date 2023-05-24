@@ -129,6 +129,19 @@ class BookViewModel : ViewModel() {
         }
     }
 
+    fun updateData(bookCover: ImageView, bookTitle: TextView, bookDescription: TextView) {
+        if(bookData.value != null){
+            val book = bookData.value ?: return
+            Picasso.get()
+                .load(book.imageLink)
+                .into(bookCover)
+            bookTitle.text = book.bookTitle
+            bookDescription.text = book.description
+        }else{
+            Log.e("BookModelView", "bookData is null")
+        }
+    }
+
 
 
 }

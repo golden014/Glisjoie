@@ -93,6 +93,14 @@
                 android:textAlignment="gravity"
                 android:textCursorDrawable="@null" />
 
+            <ImageView
+                android:id="@+id/editButton"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_settings_24"
+                app:tint="@color/pink" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/detailCommentPicture"
                 android:layout_width="87dp"
