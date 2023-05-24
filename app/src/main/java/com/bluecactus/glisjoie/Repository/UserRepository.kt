@@ -143,6 +143,19 @@ class UserRepository {
             }
     }
 
+    //ban and unban user
+    fun actionBanUser(userID: String, newStatus: String, callback: (Int) -> Unit) {
+        usersCollection
+            .document(userID)
+            .update("status", newStatus)
+            .addOnSuccessListener {
+                callback(200)
+            }
+            .addOnFailureListener{
+                callback(500)
+            }
+    }
+
     //update email
     fun updateEmail(newEmail: String, callback: (Int) -> Unit) {
         //cek email unique atau engga

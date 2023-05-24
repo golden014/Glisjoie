@@ -9,10 +9,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.Model.ViewHistoryModel
 import com.bluecactus.glisjoie.R
+import com.google.firebase.firestore.auth.User
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception
@@ -63,8 +65,25 @@ class UserProfileAdapter(
             holder.actionButton.text = "Ban"
         }
 
-        holder.actionButton.setOnClickListener {
+        val userViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
 
+
+        holder.actionButton.setOnClickListener {
+            if (status == "Banned") {
+                //unban
+                userViewModel.actionBanUser(user.userDocumentID, "Active") {
+                    if (it == 200) {
+                        reloadData()
+                    }
+                }
+            } else if (status == "Active") {
+                //ban
+                userViewModel.actionBanUser(user.userDocumentID, "Banned") {
+                    if (it == 200) {
+                        reloadData()
+                    }
+                }
+            }
         }
     }
 
@@ -81,6 +100,14 @@ class UserProfileAdapter(
     fun clearData() {
         this.objects = emptyList()
         notifyDataSetChanged()
+    }
+
+    fun reloadData() {
+        val adminViewModel = ViewModelProvider(app).get(AdminViewModel::class.java)
+
+        adminViewModel.getAllCustomer {
+            updateData(it.toList())
+        }
     }
 
 }
