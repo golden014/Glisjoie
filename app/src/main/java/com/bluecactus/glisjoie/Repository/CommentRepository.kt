@@ -6,7 +6,6 @@ import com.bluecactus.glisjoie.Model.CommentModel
 import com.bluecactus.glisjoie.Model.UserModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.util.*
 import kotlin.collections.ArrayList
 
 class CommentRepository {
@@ -42,6 +41,32 @@ class CommentRepository {
                 }
                 callback(commentsList)
             }
+    }
+
+    fun getCommentByUserID(UserID:String, callback: (ArrayList<CommentModel>) -> Unit) {
+
+        var arrs = ArrayList<CommentModel>();
+
+        db.collection("books")
+            .get()
+            .addOnSuccessListener { bookQuery ->
+                for(books in bookQuery.documents){
+                    db.collection("books").document(books.id).collection("comment").whereEqualTo("userID", UserID).get()
+                        .addOnSuccessListener{ docs ->
+                            for (doc in docs.documents){
+                                val comment = CommentModel(doc.getString("userID"),
+                                    doc.getString("bookID"),
+                                    doc.getDate("date"),
+                                    doc.getDouble("rating")!!.toFloat(),
+                                    doc.getString("description"));
+                                Log.d("COLLECTIONOFBOOKS", "getCommentByUserID: ${comment.description}")
+                                arrs.add(comment);
+                            }
+                            callback(arrs)
+                        }
+                }
+            }
+
     }
 
     fun getCommentByUserID(user:UserModel, callback: (ArrayList<CommentModel>) -> Unit?) {
