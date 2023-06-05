@@ -37,10 +37,13 @@
         </activity>
         <activity
             android:name=".View.profile.ProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".View.AdminPanelActivity"
-            android:exported="false" >
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light"
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -79,7 +82,7 @@
         <activity
             android:name=".View.books.BookDetailActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".View.books.CreateBooksActivity"
             android:exported="true" >

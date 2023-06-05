@@ -54,6 +54,8 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var bookCommentRating: RatingBar
     private lateinit var bookReviewCount : TextView
 
+    private lateinit var returnButton: ImageView
+
     //Data
     private var arr : ArrayList<CommentModel> = ArrayList<CommentModel>();
 
@@ -61,6 +63,13 @@ class BookDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
+
+        returnButton = findViewById(R.id.return_button_action_bar)
+
+        returnButton.setOnClickListener() {
+            Log.e("return", "oke")
+            onBackPressed()
+        }
 
         var bookId = intent.getStringExtra("bookID")
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)

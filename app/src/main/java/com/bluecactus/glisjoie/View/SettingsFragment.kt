@@ -44,8 +44,8 @@ class SettingsFragment : Fragment() {
         userViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
 
         userViewModel.getCurrUser {
-            if (it.role != "Admin") {
-                adminSettingsLayout.visibility = View.GONE
+            if (it.role == "Admin") {
+                adminSettingsLayout.visibility = View.VISIBLE
             }
         }
 

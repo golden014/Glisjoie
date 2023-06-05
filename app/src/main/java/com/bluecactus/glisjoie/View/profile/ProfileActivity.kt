@@ -38,6 +38,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var followButton: Button
     private var isSelf = false
 
+    private lateinit var returnButton: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -46,7 +48,12 @@ class ProfileActivity : AppCompatActivity() {
         var followViewModel = ViewModelProvider(this).get(FollowViewModel::class.java)
         var profileID = intent.getStringExtra("userId")
 
+        returnButton = findViewById(R.id.return_button_action_bar)
 
+        returnButton.setOnClickListener() {
+            Log.e("return", "oke")
+            onBackPressed()
+        }
 
 
 

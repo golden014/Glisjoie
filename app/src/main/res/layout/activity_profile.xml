@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".View.profile.ProfileActivity">
 
+    <include layout="@layout/toolbar_return"/>
+
     <TextView
         android:id="@+id/profileEmail"
         android:layout_width="111dp"
