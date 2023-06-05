@@ -61,7 +61,7 @@
         <activity
             android:name=".View.ViewHistoryActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".View.LoginActivity"
             android:exported="false"

@@ -142,4 +142,9 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this@ProfileActivity, HomeActivity::class.java).putExtra("fromProfile", true)
+        startActivity(intent)
+    }
 }

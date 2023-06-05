@@ -13,4 +13,5 @@
     <color name="transparent">#00000000</color>
     <color name="pink">#FF008A</color>
     <color name="light_gray">#F1F1F1</color>
+    <color name="red_main">#FF6961</color>
 </resources>

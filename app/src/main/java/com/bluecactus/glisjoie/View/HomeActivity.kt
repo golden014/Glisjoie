@@ -130,6 +130,7 @@ class HomeActivity:AppCompatActivity() {
 //                        supportFragmentManager.beginTransaction().replace(R.id.container_nav, viewHistoryFragment).commit()
                         val intent = Intent(this@HomeActivity, ProfileActivity::class.java).putExtra("userId", currentUser.userDocumentID)
                         startActivity(intent)
+                        finish()
                         return true
                     }
                     R.id.settings_nav -> {
@@ -141,6 +142,10 @@ class HomeActivity:AppCompatActivity() {
             }
 
         })
+
+        if(intent.getBooleanExtra("fromProfile", false)) {
+            botNavView.selectedItemId = R.id.home_nav
+        }
 
         message = findViewById<TextView>(R.id.noBooksMessage)
 //

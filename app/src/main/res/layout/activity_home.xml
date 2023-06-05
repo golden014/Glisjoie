@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_nav_menu"
-        android:background="@color/logo_cyan"
+        android:background="@color/red_main"
         app:itemIconTint="@null"
         app:itemTextColor="@color/black"
     />
