@@ -23,7 +23,7 @@ class BookModel(
     var rating: Float?,
     var author: String?,
 ) {
-    private fun uploadImage(callback: (String?) -> Unit) {
+    public fun uploadImage(callback: (String?) -> Unit) {
         val storageRef = FirebaseStorage.getInstance().reference
         val filename = UUID.randomUUID().toString() + ".jpg"
 
@@ -118,7 +118,6 @@ class BookModel(
         }
     }
 
-
     private fun uploadBook(callback: (String?) -> Unit) {
         var message = "";
         Log.wtf("BookModel", "Sending upload request...")
@@ -135,7 +134,7 @@ class BookModel(
             }
     }
 
-    private fun updateBookByID(bookID: String, field: String, newValue: String, callback: (Int) -> Unit) {
+    public fun updateBookByID(bookID: String, field: String, newValue: String, callback: (Int) -> Unit) {
         val db = Firebase.firestore
         db.collection("books")
             .document(bookID)
@@ -148,7 +147,7 @@ class BookModel(
             }
     }
 
-    private fun deleteBookByID(bookID: String, callback: (Int) -> Unit) {
+    public fun deleteBookByID(bookID: String, callback: (Int) -> Unit) {
         val db = Firebase.firestore
         db.collection("books")
             .document(bookID)

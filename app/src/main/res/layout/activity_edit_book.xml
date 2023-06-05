@@ -6,56 +6,59 @@
     android:layout_height="match_parent"
     android:overScrollMode="ifContentScrolls">
 
-    <ImageView
-        android:id="@+id/bookCover"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="150dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/bookDescription"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="150dp"
-        android:gravity="top|left"
-        android:text="Book Description"
-        android:textAlignment="textStart"
-        android:textCursorDrawable="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookTitle" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/bookTitle"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="150dp"
-        android:gravity="top|left"
-        android:text="Book Title"
-        android:textCursorDrawable="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookCover" />
+            <ImageView
+                android:id="@+id/bookCover"
+                android:layout_width="200dp"
+                android:layout_height="300dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="0dp"
+                tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/deleteBook"
-        android:layout_width="300dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="150dp"
-        android:text="Delete Book"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookDescription" />
+            <TextView
+                android:id="@+id/bookTitle"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="150dp"
+                android:gravity="top|left"
+                android:text="Book Title"
+                android:textCursorDrawable="@null" />
+
+            <TextView
+                android:id="@+id/bookDescription"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="150dp"
+                android:gravity="top|left"
+                android:scaleType="centerCrop"
+                android:text="Book Description"
+                android:textAlignment="textStart"
+                android:textCursorDrawable="@null" />
+
+            <Button
+                android:id="@+id/deleteBook"
+                android:layout_width="300dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="150dp"
+                android:text="Delete Book" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
