@@ -163,9 +163,13 @@ class BookDetailActivity : AppCompatActivity() {
 //      TODO: IMPORTANT!! uncomment when receiving put extra
 //      bookId = intent.getStringExtra("KEYNAME")
 
-        bookViewModel.countData.observe(this){
-            bookReviewCount.text = bookViewModel.countData.value.toString() + " Reviews"
+        bookViewModel.countData.observe(this) {
+            val rating = bookViewModel.bookData.value?.rating
+            val ratingText = if (rating != null && rating.isNaN()) "0" else rating?.toString() ?: ""
+
+            bookReviewCount.text = "($ratingText)${bookViewModel.countData.value} Reviews"
         }
+
 
         bookViewModel.bookData.observe(this) {
             bookViewModel.updateData(bookCover, bookTitle, bookAuthor, bookRating, bookDescription)

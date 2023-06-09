@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -76,31 +77,36 @@ class CredentialSettingsActivity : AppCompatActivity() {
         layout.addView(confNewPass)
 
         updatePasswordLayout.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Update Password")
+
+            if (layout.parent != null) {
+                (layout.parent as ViewGroup).removeView(layout)
+            }
+
+            val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+            val alertDialog: AlertDialog = alertDialogBuilder.setTitle("Update Password")
                 .setView(layout)
                 .setPositiveButton("Update") { dialog, _ ->
                     val currPass = currPassword.text.toString()
                     val newPass = newPassword.text.toString()
                     val confNew = confNewPass.text.toString()
 
-                    //TODO:panggil viewModel utk update password
-                    userViewModel.updatePassword(currPass, newPass, confNew) {
-                        if (it == 200) {
-                            AlertDialog.Builder(this).setMessage("Update Password Success !").create().show()
-                        } else if (it == 400) {
-                            AlertDialog.Builder(this).setMessage("Confirm Password Don't Match").create().show()
-                        } else {
-                        AlertDialog.Builder(this).setMessage("Update Password Failed !").create().show()
-                    }
+                    userViewModel.updatePassword(currPass, newPass, confNew) { responseCode ->
+                        val message = when (responseCode) {
+                            200 -> "Update Password Success!"
+                            400 -> "Confirm Password Don't Match"
+                            else -> "Update Password Failed!"
+                        }
+                        AlertDialog.Builder(this).setMessage(message).create().show()
                     }
                     dialog.dismiss()
                 }
-                .setNegativeButton("Cancel") {dialog, _ ->
+                .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
-                .show()
+
+            alertDialog.show()
         }
+
     }
 }

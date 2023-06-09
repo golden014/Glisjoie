@@ -29,7 +29,7 @@ class BookViewModel : ViewModel() {
                 Log.d("JEVCON", "getBookByID: $bookID")
                 BookRepository().getCommentsAndRatingForBook(bookID!!){ sum, average ->
                     Log.d("JEVCON12312", "getBookByID: $sum $average")
-                    bookModel.rating = average
+                    bookModel.rating =  "%.2f".format(average).toFloat()
                     bookData.value = bookModel
                     countData.value = sum
                     Log.d("HAPPY", bookData.value!!.bookTitle)
