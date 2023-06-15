@@ -1,5 +1,6 @@
 package com.bluecactus.glisjoie.View.books
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.View.HomeActivity
 import com.bluecactus.glisjoie.ViewModel.BookViewModel
 import com.bluecactus.glisjoie.ViewModel.ImageSelectionViewModel
 
@@ -63,6 +65,8 @@ class CreateBooksActivity : AppCompatActivity() {
                     .setPositiveButton("OK", null)
                     .create()
                     .show()
+
+
             }
         }
     }

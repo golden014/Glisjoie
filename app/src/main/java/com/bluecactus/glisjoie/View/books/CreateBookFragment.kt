@@ -1,6 +1,7 @@
 package com.bluecactus.glisjoie.View.books
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import com.bluecactus.glisjoie.Model.BookModel
 import com.bluecactus.glisjoie.Model.UserModel
 import com.bluecactus.glisjoie.R
 import com.bluecactus.glisjoie.Repository.CommentRepository
+import com.bluecactus.glisjoie.View.HomeActivity
 import com.bluecactus.glisjoie.ViewModel.BookViewModel
 import com.bluecactus.glisjoie.ViewModel.ImageSelectionViewModel
 
@@ -65,7 +67,7 @@ class CreateBookFragment : Fragment() {
         imageView.setImageResource(R.drawable.image)
 
         //Observer jika image data berubah
-        viewModel.imageData.observe(this) {
+        viewModel.imageData.observe(viewLifecycleOwner) {
             viewModel.setView(imageView)
         }
 
@@ -80,15 +82,26 @@ class CreateBookFragment : Fragment() {
         }
 
         //[ ALERT ] observe response buat alert klo misal product berhasil/gagal
-        bookViewModel.response.observe(this) { message ->
+        bookViewModel.response.observe(viewLifecycleOwner) { message ->
             if(message != ""){
                 AlertDialog.Builder(this.requireContext())
                     .setMessage(message)
                     .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
                         Log.d("A", "onViewCreated:TROLOLO ")
+                        if (activity != null) {
+                            val intent = Intent(activity, HomeActivity::class.java)
+                            // Optionally you can add flags to clear the activity stack
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            activity?.finish()
+                        }
                     })
                     .create()
                     .show()
+
+
+
+
             }
         }
     }
