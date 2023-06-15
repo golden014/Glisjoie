@@ -108,14 +108,23 @@ class UserRepository {
     fun searchCustomer(name: String, callback: (Array<UserModel>) -> Unit) {
         var filtered = mutableListOf<UserModel>()
         getAllCustomer() { users ->
-            for (obj in users) {
-                if (obj.username.contains(name)) {
-                    filtered.add(obj)
-                }
-            }
-
+            filtered = users.filter { it.username.contains(name) } as MutableList<UserModel>
             callback(filtered.toTypedArray())
+//            for (i in users.indices) {
+//                if (users[i].username.contains(name)) {
+//                    filtered.add(users[i])
+//
+//                }
+//
+//                if (i == (users.size) - 1) {
+//                    callback(filtered.toTypedArray())
+////                    Log.e("filtered", filtered[filtered.size].username)
+//                }
+//            }
+
         }
+
+
     }
 
     fun getUserByID(userID: String, callback: (UserModel?) -> Unit) {
