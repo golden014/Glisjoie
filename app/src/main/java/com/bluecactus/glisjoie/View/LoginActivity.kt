@@ -49,15 +49,26 @@ class LoginActivity : AppCompatActivity() {
                     if (result == "Success") {
 //                        Log.e("loginValidation", "auth success")
                         val currUser = loginViewModel.bindUserInfo(email_text) {result ->
+
                             userViewModel.updateCurrUser(result)
                             userViewModel.currUser.observe(this) { user ->
-                                error_text.text = user?.userDocumentID ?: "No user"
-                                triggerNotification()
-                                val intent = Intent(this, HomeActivity::class.java)
-                                startActivity(intent)
+                                if (user != null) {
+                                    if (user.status == "Banned") {
+                                        error_text.text = "You are banned"
+
+                                    } else if (user.status == "Active"){
+                                        Log.e("ban", user.userDocumentID + " " + user.status)
+//                                        error_text.text = user.userDocumentID ?: "No user"
+                                        triggerNotification()
+                                        val intent = Intent(this, HomeActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                }
+
+
                             }
                         }
-                        error_text.text = userViewModel.currUser.value?.userDocumentID ?: "asdasdad"
+//                        error_text.text = userViewModel.currUser.value?.userDocumentID ?: "asdasdad"
 
 
 
@@ -100,8 +111,8 @@ class LoginActivity : AppCompatActivity() {
         // Create a notification
             val builder = NotificationCompat.Builder(this, "notifyId")
                 .setSmallIcon(R.drawable.ic_baseline_menu_book_24) // Set the icon
-                .setContentTitle("Profile Update") // Set the title
-                .setContentText("Your profile updated!") // Set the text
+                .setContentTitle("Login Successful") // Set the title
+                .setContentText("Welcome to Glisjoie!") // Set the text
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
             // Get the NotificationManager

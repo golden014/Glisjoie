@@ -71,6 +71,7 @@ class LoginViewModel: ViewModel() {
                         doc.get("role") as String,
                         doc.get("profilePictureURL") as String
                     )
+//                    Log.e("banbind", currUser.status)
                     callback(currUser)
 //                    Log.e("currUserViewModel", currUser.userDocumentID)
                 } else {
