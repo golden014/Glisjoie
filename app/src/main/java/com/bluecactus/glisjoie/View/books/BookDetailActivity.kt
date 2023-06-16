@@ -1,5 +1,6 @@
 package com.bluecactus.glisjoie.View.books
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -58,6 +59,27 @@ class BookDetailActivity : AppCompatActivity() {
 
     //Data
     private var arr : ArrayList<CommentModel> = ArrayList<CommentModel>();
+
+    override fun onResume() {
+        super.onResume()
+
+        val bookId = getFromSharedPref(this, "bookId", "null");
+
+        bookViewModel.getBookByID(bookId);
+        bookViewModel.updateData(bookCover, bookTitle, bookAuthor, bookRating, bookDescription)
+    }
+
+    fun saveToSharedPref(context: Context, key: String, value: String) {
+        val sharedPreferences = context.getSharedPreferences("BookPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(key, value)
+        editor.apply()
+    }
+
+    fun getFromSharedPref(context: Context, key: String, defaultValue: String): String? {
+        val sharedPreferences = context.getSharedPreferences("BookPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(key, defaultValue)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,6 +177,8 @@ class BookDetailActivity : AppCompatActivity() {
             }
         }
 
+
+
         bookCommentButton.setOnClickListener {
             commentViewModel.validateComment(bookCommentField.text.toString(), bookCommentRating.rating, currUser, bookViewModel.bookData.value!!)
         };
@@ -184,6 +208,11 @@ class BookDetailActivity : AppCompatActivity() {
                 startActivity(intent)
 //            }
         }
+
+        if (bookId != null) {
+            saveToSharedPref(this, "bookId", bookId)
+        }
+
         bookViewModel.getBookByID(bookId)
 
 

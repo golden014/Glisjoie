@@ -1,5 +1,6 @@
 package com.bluecactus.glisjoie.View.books
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bluecactus.glisjoie.Model.BookModel
 import com.bluecactus.glisjoie.R
+import com.bluecactus.glisjoie.View.HomeActivity
+import com.bluecactus.glisjoie.View.profile.ProfileActivity
 import com.bluecactus.glisjoie.ViewModel.BookViewModel
 import com.bluecactus.glisjoie.ViewModel.ImageSelectionViewModel2
 import com.squareup.picasso.Picasso
@@ -19,7 +22,7 @@ class EditBooksActivity : AppCompatActivity() {
     private lateinit var bookCover: ImageView
     private lateinit var bookTitle: TextView
     private lateinit var bookDescription: TextView
-    private lateinit var submitButton: Button
+    private lateinit var deleteButton: Button
 
     private lateinit var bookViewModel: BookViewModel
     private lateinit var imageViewModel: ImageSelectionViewModel2
@@ -33,7 +36,7 @@ class EditBooksActivity : AppCompatActivity() {
         bookCover = findViewById(R.id.bookCover)
         bookTitle = findViewById(R.id.bookTitle)
         bookDescription = findViewById(R.id.bookDescription)
-        submitButton = findViewById(R.id.deleteBook)
+        deleteButton = findViewById(R.id.deleteBook)
         bookViewModel = ViewModelProvider(this)[BookViewModel::class.java]
         imageViewModel =  ViewModelProvider(this, ImageSelectionViewModel2.Factory(this as EditBooksActivity)).get(ImageSelectionViewModel2::class.java);
 
@@ -82,17 +85,33 @@ class EditBooksActivity : AppCompatActivity() {
                         .into(bookCover)
                     bookModel.uploadImage { link ->
                         bookModel.updateBookByID(bookId!!, "imageLink", link!!) { message ->
-                            AlertDialog.Builder(this).setMessage("Image Updated").create().show()
+                            Toast.makeText(this, "Image update success", Toast.LENGTH_SHORT).show()
+                            deleteButton.isEnabled = true
                         }
                     }
                 }
                 alertDialogImageBuilder.setNegativeButton("Cancel") { dialog, _ ->
                     dialog.dismiss()
+                    deleteButton.isEnabled = true
                 }
                 alertDialogImageBuilder.setCancelable(false)
                 alertDialogImage = alertDialogImageBuilder.create()
                 alertDialogImage?.show()
                 imageViewModel.selectImage()
+            }
+        }
+
+        deleteButton.setOnClickListener {
+            if (bookId != null) {
+                bookModel.deleteBookByID(bookId){it ->
+                    if(it == 200) {
+                        Toast.makeText(this, "Delete success", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    if(it == 500) Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

@@ -1,8 +1,10 @@
 package com.bluecactus.glisjoie.View
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
@@ -121,6 +124,13 @@ class LoginActivity : AppCompatActivity() {
             // Send the notification
 //            notificationManagerCompat.notify(1, builder.build())
         try {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
             notificationManagerCompat.notify(1, builder.build())
             Log.d("Notification", "Notification sent") // Log after notification is sent
         } catch (e: Exception) {
