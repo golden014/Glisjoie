@@ -66,6 +66,7 @@ class SettingsFragment : Fragment() {
 
         logoutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
+            this.activity?.finishAffinity()
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }

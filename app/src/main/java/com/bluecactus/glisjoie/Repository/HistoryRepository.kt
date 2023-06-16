@@ -22,7 +22,6 @@ class HistoryRepository {
                 .document(userID)
                 .collection("viewHistory")
         val query = viewHistoryRef.whereEqualTo("bookID", bookID)
-
         query.get().addOnSuccessListener { querySnapshot ->
             if (querySnapshot.isEmpty) {
                 // belum pernah liat buku ini, jadi buat document baru dengan
@@ -96,8 +95,6 @@ class HistoryRepository {
                     .document(bookID as String)
                     .get()
                     .addOnSuccessListener{ bookDoc ->
-
-
                         bookTitle = bookDoc.getString("bookTitle").toString()
 
                         if (bookTitle != "null") {

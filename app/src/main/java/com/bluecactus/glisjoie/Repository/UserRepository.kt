@@ -191,10 +191,21 @@ class UserRepository {
         emailIsUnique(newEmail) { unique ->
             if (unique) {
                 val user = FirebaseAuth.getInstance().currentUser
+                val oldEmail = user?.email
                 user?.updateEmail(newEmail)
                     ?.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            callback(200)
+                            usersCollection.whereEqualTo("email", oldEmail).get().addOnSuccessListener { userDoc ->
+                                usersCollection.document(userDoc.documents[0].id).update("email", newEmail)
+                                    .addOnSuccessListener {
+                                        callback(200)
+                                    }
+                                    .addOnFailureListener{
+                                        callback(500)
+                                    }
+
+                            }
+
                         } else {
                             callback(500)
                         }
