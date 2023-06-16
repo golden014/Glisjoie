@@ -39,6 +39,7 @@
         android:layout_marginStart="14dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="14dp"
+        android:fontFamily="@font/katibeh"
         android:gravity="bottom"
         android:text="TextView"
         android:textSize="20sp"

@@ -14,7 +14,7 @@
         android:background="#000000"
         android:fontFamily="@font/katibeh"
         android:gravity="center"
-        android:text="Books"
+        android:text="Comments"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"

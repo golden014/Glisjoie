@@ -20,13 +20,13 @@
             android:id="@+id/logo_title"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginBottom="0dp"
             android:layout_marginTop="70dp"
+            android:layout_marginBottom="0dp"
             android:fontFamily="@font/katibeh"
             android:gravity="center"
             android:text="Glisjoie"
-            android:textSize="40dp"
-            android:textColor="@color/logo_cyan"/>
+            android:textColor="@color/logo_cyan"
+            android:textSize="40dp" />
         <TextView
             android:id="@+id/register_title"
             android:layout_width="match_parent"
@@ -71,10 +71,11 @@
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
             android:backgroundTint="@color/curr_auth_page_button"
+            android:fontFamily="@font/katibeh"
+            android:text="Login"
             android:textColor="@color/black"
-            />
+            android:textSize="20sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -125,9 +126,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/other_auth_page_button"
+            android:fontFamily="@font/katibeh"
             android:minHeight="48dp"
             android:text="@string/sign_up"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
 
 

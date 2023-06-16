@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.bluecactus.glisjoie.R
@@ -60,13 +61,7 @@ class CreateBooksActivity : AppCompatActivity() {
         //[ ALERT ] observe response buat alert klo misal product berhasil/gagal
         bookViewModel.response.observe(this) { message ->
             if(message != ""){
-                AlertDialog.Builder(this)
-                    .setMessage(message)
-                    .setPositiveButton("OK", null)
-                    .create()
-                    .show()
-
-
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
     }

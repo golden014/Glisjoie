@@ -26,20 +26,26 @@
             android:id="@+id/title_view_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"/>
+            android:fontFamily="@font/katibeh"
+            android:text="Title"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/author_view_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Author Name"/>
+            android:fontFamily="@font/katibeh"
+            android:text="Author Name"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/date_view_history"
-            android:paddingTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12/12/2023 4 A.M."/>
+            android:fontFamily="@font/katibeh"
+            android:paddingTop="20dp"
+            android:text="12/12/2023 4 A.M."
+            android:textSize="20sp" />
 
     </LinearLayout>
 

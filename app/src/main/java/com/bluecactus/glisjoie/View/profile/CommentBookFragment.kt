@@ -34,6 +34,20 @@ class CommentBookFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_comment_book, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        userViewModel.getCurrUser {
+            CommentRepository().getCommentByUserID(it.userDocumentID){arr ->
+                adapter.updateData(arr.toList());
+                if(arr.size == 0){
+                    emptyComment.visibility = View.VISIBLE
+                }else{
+                    emptyComment.visibility = View.INVISIBLE
+                }
+            };
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
