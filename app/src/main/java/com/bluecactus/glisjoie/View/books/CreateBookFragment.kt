@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.bluecactus.glisjoie.Model.BookModel
@@ -84,24 +85,7 @@ class CreateBookFragment : Fragment() {
         //[ ALERT ] observe response buat alert klo misal product berhasil/gagal
         bookViewModel.response.observe(viewLifecycleOwner) { message ->
             if(message != ""){
-                AlertDialog.Builder(this.requireContext())
-                    .setMessage(message)
-                    .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
-                        Log.d("A", "onViewCreated:TROLOLO ")
-                        if (activity != null) {
-                            val intent = Intent(activity, HomeActivity::class.java)
-                            // Optionally you can add flags to clear the activity stack
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                            activity?.finish()
-                        }
-                    })
-                    .create()
-                    .show()
-
-
-
-
+                Toast.makeText(this.activity, message, Toast.LENGTH_SHORT).show()
             }
         }
     }

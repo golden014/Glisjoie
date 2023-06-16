@@ -35,17 +35,19 @@
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/katibeh"
+                android:text=""
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text=""/>
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textViewAuthor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/katibeh"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
     </RelativeLayout>

@@ -32,9 +32,11 @@
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="150dp"
+                android:fontFamily="@font/katibeh"
                 android:gravity="top|left"
                 android:text="Book Title"
-                android:textCursorDrawable="@null" />
+                android:textCursorDrawable="@null"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/bookDescription"
@@ -43,11 +45,13 @@
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="150dp"
+                android:fontFamily="@font/katibeh"
                 android:gravity="top|left"
                 android:scaleType="centerCrop"
                 android:text="Book Description"
                 android:textAlignment="textStart"
-                android:textCursorDrawable="@null" />
+                android:textCursorDrawable="@null"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/deleteBook"
@@ -56,7 +60,9 @@
                 android:layout_marginStart="150dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="150dp"
-                android:text="Delete Book" />
+                android:fontFamily="@font/katibeh"
+                android:text="Delete Book"
+                android:textSize="16sp" />
 
         </LinearLayout>
     </ScrollView>

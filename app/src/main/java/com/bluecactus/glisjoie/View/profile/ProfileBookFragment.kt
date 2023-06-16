@@ -42,9 +42,9 @@ class ProfileBookFragment : Fragment() {
             BookRepository().getPreviewModelByUser(it.userDocumentID){arr ->
                 adapter.updateData(arr.toList());
                 if(arr.size == 0){
-                    emptyBook.visibility = View.INVISIBLE
-                }else{
                     emptyBook.visibility = View.VISIBLE
+                }else{
+                    emptyBook.visibility = View.INVISIBLE
                 }
             };
         }
