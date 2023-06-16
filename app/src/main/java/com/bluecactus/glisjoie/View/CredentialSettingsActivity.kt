@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.bluecactus.glisjoie.R
@@ -45,7 +46,6 @@ class CredentialSettingsActivity : AppCompatActivity() {
                             AlertDialog.Builder(this).setMessage("Email Not Unique, Failed !").create().show()
                         } else {
                             AlertDialog.Builder(this).setMessage("Update Email Failed (Make sure it's unique !").create().show()
-
                         }
                     }
                     dialog.dismiss()
@@ -96,7 +96,7 @@ class CredentialSettingsActivity : AppCompatActivity() {
                             400 -> "Confirm Password Don't Match"
                             else -> "Update Password Failed!"
                         }
-                        AlertDialog.Builder(this).setMessage(message).create().show()
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     }
                     dialog.dismiss()
                 }

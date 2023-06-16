@@ -7,10 +7,26 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/booksFragmentHeader2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="30dp"
+        android:background="#000000"
+        android:fontFamily="@font/katibeh"
+        android:gravity="center"
+        android:text="Books"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/emptyComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="130dp"
         android:text="No Comments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +36,9 @@
 
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="642dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintTop_toTopOf="parent"
         tools:context=".View.profile.CommentBookFragment">
 
         <androidx.recyclerview.widget.RecyclerView
