@@ -79,15 +79,49 @@ class CreateBookFragment : Fragment() {
 
         //[ADD BOOK BTN] Buat ngeupload book
         addBookBtn.setOnClickListener{
-            bookViewModel.createBook(viewModel.imageData.value?.imageUri, titleTF.text.toString(), descriptionTF.text.toString())
+            bookViewModel.createBook(viewModel.imageData.value?.imageUri, titleTF.text.toString(), descriptionTF.text.toString()) {message ->
+                if(message != "") {
+                    //kalau error
+                    Toast.makeText(this.activity, message, Toast.LENGTH_SHORT).show()
+
+                    if (message == "Upload success") {
+                        if (this.activity != null) {
+                            val intent = Intent(this.activity, HomeActivity::class.java)
+                            // Optionally you can add flags to clear the activity stack
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            activity?.finish()
+                            startActivity(intent)
+                        }
+                    }
+                } else {
+                    //redirect saat bener
+//
+
+//                    }
+                }
+            }
+
+//
+//            bookViewModel.response.observe(viewLifecycleOwner) { message ->
+//                if(message != "") {
+//                    //kalau error
+//                    Toast.makeText(this.activity, message, Toast.LENGTH_SHORT).show()
+//                } else {
+//                    //redirect saat bener
+//                    if (activity != null) {
+//                        val intent = Intent(activity, HomeActivity::class.java)
+//                        // Optionally you can add flags to clear the activity stack
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                        startActivity(intent)
+//                        activity?.finish()
+//                    }
+//                }
+//
+//            }
         }
 
         //[ ALERT ] observe response buat alert klo misal product berhasil/gagal
-        bookViewModel.response.observe(viewLifecycleOwner) { message ->
-            if(message != ""){
-                Toast.makeText(this.activity, message, Toast.LENGTH_SHORT).show()
-            }
-        }
+
     }
 
     companion object {

@@ -134,6 +134,7 @@ class EditBooksActivity : AppCompatActivity() {
                     if (titleValid(enteredTitle)) {
                         bookModel.updateBookByID(bookId!!, "bookTitle", enteredTitle) { message ->
                             AlertDialog.Builder(this).setMessage("Title Updated").create().show()
+                            bookTitle.text = enteredTitle;
                         }
                         dialog.dismiss()
                     } else {
@@ -156,6 +157,7 @@ class EditBooksActivity : AppCompatActivity() {
                 if (enteredDescription.length < 1500) {
                     bookModel.updateBookByID(bookId!!, "description", enteredDescription) { message ->
                         AlertDialog.Builder(this).setMessage("Description Updated").create().show()
+                        bookDescription.text = enteredDescription;
                     }
                 } else {
                     AlertDialog.Builder(this).setMessage("Description Invalid").create().show()

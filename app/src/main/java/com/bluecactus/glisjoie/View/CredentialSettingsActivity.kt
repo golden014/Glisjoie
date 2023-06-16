@@ -94,6 +94,7 @@ class CredentialSettingsActivity : AppCompatActivity() {
                         val message = when (responseCode) {
                             200 -> "Update Password Success!"
                             400 -> "Confirm Password Don't Match"
+                            410 -> "All Fields Must Not Be Empty!"
                             else -> "Update Password Failed!"
                         }
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

@@ -54,9 +54,9 @@ class CreateBooksActivity : AppCompatActivity() {
         }
 
         //[ADD BOOK BTN] Buat ngeupload book
-        addBookBtn.setOnClickListener{
-            bookViewModel.createBook(viewModel.imageData.value?.imageUri, titleTF.text.toString(), descriptionTF.text.toString())
-        }
+//        addBookBtn.setOnClickListener{
+//            bookViewModel.createBook(viewModel.imageData.value?.imageUri, titleTF.text.toString(), descriptionTF.text.toString())
+//        }
 
         //[ ALERT ] observe response buat alert klo misal product berhasil/gagal
         bookViewModel.response.observe(this) { message ->

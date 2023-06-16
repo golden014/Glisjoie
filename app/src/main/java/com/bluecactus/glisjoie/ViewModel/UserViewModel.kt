@@ -44,7 +44,11 @@ class UserViewModel: ViewModel() {
     }
 
     fun updatePassword(currPassword: String, newPassword: String, confNewPassword: String,callback: (Int) -> Unit) {
-        if (newPassword != confNewPassword) {
+        if (newPassword == "" || currPassword == "" || confNewPassword == "") {
+            callback(410)
+        }
+
+        else if (newPassword != confNewPassword) {
             callback(400)
         } else {
             userRepo.updatePassword(currPassword, newPassword) {

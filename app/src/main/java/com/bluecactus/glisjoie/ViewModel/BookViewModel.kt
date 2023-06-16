@@ -40,7 +40,7 @@ class BookViewModel : ViewModel() {
         }
     }
 
-    fun createBook(imageURI: Uri?, bookTitle: String, bookDescription: String) {
+    fun createBook(imageURI: Uri?, bookTitle: String, bookDescription: String, callback: (String) -> Unit) {
         //TODO: UPDATE THIS BookModel Constructor
         val userViewModel = UserViewModel();
         message = ""
@@ -66,17 +66,21 @@ class BookViewModel : ViewModel() {
 
             if (message.isBlank()) {
                 uploadBookRequest(){ str->
+                    callback(str)
                     response.value = str
                 }
+                //success
                 Log.d("BookViewModel", "createBook: with message$message")
             } else {
+                callback(message)
                 response.value = message
             }
 
             Log.wtf("BookModel", "BookViewModel: $message")
-            if (message.isNotBlank()) {
-                response.value = message
-            }
+//            if (message.isNotBlank()) {
+//                callback(message)
+//                response.value = message
+//            }
         }
     }
 
