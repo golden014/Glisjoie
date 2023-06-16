@@ -85,7 +85,9 @@ class HistoryRepository {
 
         viewHistoryRef.whereEqualTo("isDeleted", "false").get().addOnSuccessListener { querySnapshot ->
             for (doc in querySnapshot.documents) {
+
                 val bookID = doc.getString("bookID")
+
                 val date = doc.getDate("date").toString()
                 var cover: String
                 var bookTitle: String
@@ -94,10 +96,16 @@ class HistoryRepository {
                     .document(bookID as String)
                     .get()
                     .addOnSuccessListener{ bookDoc ->
+
+
                         bookTitle = bookDoc.getString("bookTitle").toString()
-                        cover = bookDoc.getString("imageLink").toString()
-                        booksHistory.add(ViewHistoryModel(bookTitle, cover, date, doc.id))
-                        callback(booksHistory.toTypedArray())
+
+                        if (bookTitle != "null") {
+                            cover = bookDoc.getString("imageLink").toString()
+
+                            booksHistory.add(ViewHistoryModel(bookTitle, cover, date, doc.id))
+                            callback(booksHistory.toTypedArray())
+                        }
                     }
             }
         }
