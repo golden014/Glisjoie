@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/katibeh"
-            android:text="@string/title"
+            android:text="Title"
             android:textSize="16sp" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/katibeh"
-            android:text="@string/author_name"
+            android:text="Author Name"
             android:textSize="20sp" />
 
         <TextView

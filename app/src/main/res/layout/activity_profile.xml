@@ -103,7 +103,7 @@
         android:layout_marginEnd="20dp"
         android:background="#3A91DD"
         android:fontFamily="@font/katibeh"
-        android:text="@string/follow"
+        android:text="Follow"
         android:textColor="#FFFFFF"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"

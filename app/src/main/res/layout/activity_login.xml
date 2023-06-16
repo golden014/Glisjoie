@@ -27,17 +27,17 @@
             android:text="Glisjoie"
             android:textColor="@color/logo_cyan"
             android:textSize="40dp" />
-
         <TextView
             android:id="@+id/register_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Login"
             android:layout_marginBottom="50dp"
-            android:fontFamily="@font/katibeh"
             android:gravity="center"
-            android:text="@string/login"
+            android:textSize="25dp"
+            android:fontFamily="@font/katibeh"
             android:textColor="@color/logo_cyan"
-            android:textSize="25dp" />
+            />
 
         <EditText
             android:id="@+id/textEmail"
@@ -53,9 +53,9 @@
             android:id="@+id/passwordField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password"
             android:inputType="textPassword"
-            android:textSize="13dp" />
+            android:hint="Password"
+            android:textSize="13dp"/>
 
         <TextView
             android:id="@+id/error_message"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/curr_auth_page_button"
             android:fontFamily="@font/katibeh"
-            android:text="@string/login"
+            android:text="Login"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -96,10 +96,11 @@
                 android:id="@+id/or_auth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/or_auth_page"
                 android:layout_toRightOf="@id/left_line_or"
                 android:paddingHorizontal="20dp"
-                android:text="or"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                />
 
             <View
                 android:id="@+id/right_line_or"

@@ -14,7 +14,7 @@
         android:background="#000000"
         android:fontFamily="@font/katibeh"
         android:gravity="center"
-        android:text="@string/Comments"
+        android:text="Comments"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="130dp"
-        android:text="@string/no_comments"
+        android:text="No Comments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
