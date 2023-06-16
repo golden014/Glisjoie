@@ -22,7 +22,6 @@ class HistoryRepository {
                 .document(userID)
                 .collection("viewHistory")
         val query = viewHistoryRef.whereEqualTo("bookID", bookID)
-
         query.get().addOnSuccessListener { querySnapshot ->
             if (querySnapshot.isEmpty) {
                 // belum pernah liat buku ini, jadi buat document baru dengan
@@ -85,7 +84,9 @@ class HistoryRepository {
 
         viewHistoryRef.whereEqualTo("isDeleted", "false").get().addOnSuccessListener { querySnapshot ->
             for (doc in querySnapshot.documents) {
+
                 val bookID = doc.getString("bookID")
+
                 val date = doc.getDate("date").toString()
                 var cover: String
                 var bookTitle: String
@@ -95,9 +96,13 @@ class HistoryRepository {
                     .get()
                     .addOnSuccessListener{ bookDoc ->
                         bookTitle = bookDoc.getString("bookTitle").toString()
-                        cover = bookDoc.getString("imageLink").toString()
-                        booksHistory.add(ViewHistoryModel(bookTitle, cover, date, doc.id))
-                        callback(booksHistory.toTypedArray())
+
+                        if (bookTitle != "null") {
+                            cover = bookDoc.getString("imageLink").toString()
+
+                            booksHistory.add(ViewHistoryModel(bookTitle, cover, date, doc.id))
+                            callback(booksHistory.toTypedArray())
+                        }
                     }
             }
         }
