@@ -22,7 +22,7 @@
         android:theme="@style/Theme.Glisjoie"
         tools:targetApi="31" >
         <activity
-            android:name=".View.CredentialSettingsActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.CredentialSettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
@@ -30,7 +30,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".View.books.EditBooksActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.books.EditBooksActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light">
             <meta-data
@@ -38,11 +38,11 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".View.profile.ProfileActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.profile.ProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
-            android:name=".View.AdminPanelActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.AdminPanelActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"
             >
@@ -57,22 +57,22 @@
         <!-- android:value="" /> -->
         <!-- </activity> -->
         <activity
-            android:name=".View.SplashScreenActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.SplashScreenActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".View.ViewHistoryActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.ViewHistoryActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".View.LoginActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".View.HomeActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.HomeActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light" >
             <intent-filter>
@@ -82,18 +82,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.books.BookDetailActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.books.BookDetailActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".View.books.CreateBooksActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.books.CreateBooksActivity"
             android:exported="true" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".View.RegisterActivity"
+            android:name="edu.bluejack22_2.Glisjoie.View.RegisterActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>

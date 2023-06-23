@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.bluecactus.glisjoie'
+    namespace 'edu.bluejack22_2.glisjoie'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.bluecactus.glisjoie"
+        applicationId "edu.bluejack22_2.glisjoie"
         minSdk 33
         targetSdk 33
         versionCode 1
