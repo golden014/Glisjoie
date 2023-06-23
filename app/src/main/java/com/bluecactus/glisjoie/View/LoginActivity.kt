@@ -103,12 +103,10 @@ class LoginActivity : AppCompatActivity() {
                 val channel = NotificationChannel("notifyId", name, importance).apply {
                     this.description = description
                 }
-
                 // Register the channel with the system
                 val notificationManager = getSystemService(NotificationManager::class.java)
                 notificationManager?.createNotificationChannel(channel)
 //            }
-        Log.e("Notification", "Notification channel created") // Log after channel is created
 
 
         // Create a notification
@@ -122,7 +120,6 @@ class LoginActivity : AppCompatActivity() {
             val notificationManagerCompat = NotificationManagerCompat.from(this)
 
             // Send the notification
-//            notificationManagerCompat.notify(1, builder.build())
         try {
             if (ActivityCompat.checkSelfPermission(
                     this,

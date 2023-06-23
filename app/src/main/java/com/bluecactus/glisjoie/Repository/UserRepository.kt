@@ -108,7 +108,7 @@ class UserRepository {
     fun searchCustomer(name: String, callback: (Array<UserModel>) -> Unit) {
         var filtered = mutableListOf<UserModel>()
         getAllCustomer() { users ->
-            filtered = users.filter { it.username.contains(name) } as MutableList<UserModel>
+            filtered = users.filter { it.username.lowercase().contains(name.lowercase()) } as MutableList<UserModel>
             callback(filtered.toTypedArray())
 //            for (i in users.indices) {
 //                if (users[i].username.contains(name)) {
