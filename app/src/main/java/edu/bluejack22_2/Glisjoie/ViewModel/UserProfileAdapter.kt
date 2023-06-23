@@ -35,12 +35,14 @@ class UserProfileAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+
         val user = objects[position]
 
         Picasso.get()
             .load(user.profilePictureURL)
-            .placeholder(R.drawable.search_icon)
-            .error(R.drawable.auth_background)
+            .placeholder(R.drawable.logoglisjoie)
+            .error(R.drawable.logoglisjoie)
             .into(holder.profilePic, object : Callback {
                 override fun onSuccess() {
                     Log.d("loadImageHistory", "Success")

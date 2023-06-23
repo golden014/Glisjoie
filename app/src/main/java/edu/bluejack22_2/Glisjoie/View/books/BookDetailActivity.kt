@@ -122,6 +122,9 @@ class BookDetailActivity : AppCompatActivity() {
             adapter.updateData(arr)
         };
 
+        bookCommentIcon = findViewById(R.id.detailCommentPicture)
+        Picasso.get().load(R.drawable.logoglisjoie).into(bookCommentIcon)
+
         editBookButton = findViewById(R.id.editButton)
 
         var authorId = intent.getStringExtra("authorID")

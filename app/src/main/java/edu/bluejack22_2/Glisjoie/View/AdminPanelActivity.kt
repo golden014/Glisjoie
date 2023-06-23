@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import edu.bluejack22_2.Glisjoie.ViewModel.AdminViewModel
 import edu.bluejack22_2.Glisjoie.ViewModel.UserProfileAdapter
 import edu.bluejack22_2.glisjoie.R
@@ -25,6 +26,7 @@ class AdminPanelActivity : AppCompatActivity() {
     lateinit var bannedFilter: Button
     lateinit var activeFilter: Button
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_panel)
@@ -37,6 +39,7 @@ class AdminPanelActivity : AppCompatActivity() {
         searchMessage = findViewById(R.id.search_message_admin_page)
         bannedFilter = findViewById(R.id.filter_banned_button)
         activeFilter = findViewById(R.id.filter_active_button)
+
 
         adminViewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
 

@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import edu.bluejack22_2.Glisjoie.Model.UserModel
 import edu.bluejack22_2.Glisjoie.Repository.CommentRepository
 import edu.bluejack22_2.Glisjoie.Repository.HistoryRepository
@@ -31,6 +33,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var totalBook: TextView
     private lateinit var currUser: UserModel
     private lateinit var followButton: Button
+    private lateinit var profileImage: CircleImageView
     private var isSelf = false
 
     private lateinit var returnButton: ImageView
@@ -51,6 +54,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
+        profileImage = findViewById(R.id.profileImage)
+        Picasso.get().load(R.drawable.logoglisjoie).into(profileImage)
 
         viewPager = findViewById(R.id.profileViewPager)
         settingIcon = findViewById(R.id.settingIcon)
